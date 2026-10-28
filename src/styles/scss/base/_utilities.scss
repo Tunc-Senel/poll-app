@@ -1,0 +1,19 @@
+@use '../abstract/variables' as variables;
+
+/* === GLOBAL === */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.content {
+  max-width: variables.$content-max-width;
+  margin: 0 auto;
+  padding: 0 16px;
+}
