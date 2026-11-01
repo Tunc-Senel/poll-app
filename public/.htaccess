@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /angular-projects/poll-app/
+
+  # Existing files and folders (JS, CSS, images, favicon) are served directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Everything else goes to Angular, the router decides
+  RewriteRule ^ index.html [L]
+</IfModule>
