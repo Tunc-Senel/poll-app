@@ -15,3 +15,29 @@ body {
   margin: 0 auto;
   padding: 0 var(--space-page);
 }
+
+.custom-scrollbar {
+  /**
+   * Standard properties for Firefox only.
+   * Chromium browsers would otherwise ignore the ::-webkit-scrollbar rules
+   * and draw arrows and their own thickness.
+   */
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent) transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 10px;
+  }
+}
