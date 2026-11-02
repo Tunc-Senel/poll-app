@@ -1,0 +1,49 @@
+:root {
+  --color-accent: #FFB770;
+  --color-accent-muted: rgba(255, 183, 112, 0.3);
+  --color-accent-strong: #EE9236;
+  --color-accent-light: #FFCFA1;
+  --color-accent-pale: #FEE9D4;
+  --color-dark: #35273A;
+  --color-darkest: #221227;
+  --color-light: #FFFFFF;
+  --color-card: #FAF5FE;
+  --color-form: rgba(142, 112, 153, 0.1);
+  --color-meter-track: #EDEDED;
+  --color-meter-value: #D79451;
+  --color-list-item: rgba(217, 217, 217, 0.08);
+  --color-option-selected: rgba(255, 207, 161, 0.4);
+  --color-scrollbar-track: #BABABA;
+  --color-card-hover: #F4E9FB;
+  --color-list-item-hover: rgba(217, 217, 217, 0.16);
+  --color-dropdown-hover: rgba(217, 217, 217, 0.12);
+  --color-add-answer-hover: rgba(250, 245, 254, 0.2);
+  --color-delete-hover: rgba(255, 183, 112, 0.6);
+  --color-checkbox-hover: rgba(255, 207, 161, 0.6);
+
+  --font-base: 'Mulish', sans-serif;
+  --font-display: 'Nerko One', sans-serif;
+  --font-action: 'Nokora', sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+
+  --font-size-s: 1rem;
+  --font-size-m: 1.125rem;
+  --font-size-l: 1.5rem;
+  --font-size-xl: 2rem;
+
+  --font-size-hero: clamp(3.875rem, 3.0114rem + 4.3182vw, 6.25rem);
+  --font-size-section: clamp(3.375rem, 2.9659rem + 2.0455vw, 4.5rem);
+  --font-size-title: clamp(3rem, 2.8182rem + 0.9091vw, 3.5rem);
+  --font-size-heading: clamp(1.5rem, 1.3182rem + 0.9091vw, 2rem);
+  --font-size-card-title: clamp(1.5rem, 1.4545rem + 0.2273vw, 1.625rem);
+  --font-size-list-title: clamp(1.25rem, 1.1591rem + 0.4545vw, 1.5rem);
+  --font-size-lead: clamp(1.125rem, 0.9886rem + 0.6818vw, 1.5rem);
+
+  --content-max-width: 1440px;
+  --space-page: 1rem;
+}

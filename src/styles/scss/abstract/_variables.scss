@@ -1,2 +1,5 @@
-/* === LAYOUT === */
-$content-max-width: 1440px;
+/**
+ * Breakpoints as Sass variables.
+ * Custom properties do not work inside @media queries, so breakpoints stay here.
+ * Added as soon as the first component needs a media query.
+ */
