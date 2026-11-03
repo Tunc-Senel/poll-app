@@ -31,3 +31,36 @@ export interface AnswerRow {
   text: string;
   position: number;
 }
+
+/**
+ * Question row with its embedded answers,
+ * as returned by the nested detail query.
+ */
+export interface QuestionWithAnswersRow extends QuestionRow {
+  answers: AnswerRow[];
+}
+
+/**
+ * Survey row with its embedded questions and answers,
+ * as returned by the nested detail query. Contains no votes.
+ */
+export interface SurveyDetailRow extends SurveyRow {
+  questions: QuestionWithAnswersRow[];
+}
+
+/**
+ * Answer with its vote count, as returned by the vote count query.
+ * Supabase wraps the count in an array, e.g. [{ count: 3 }].
+ */
+export interface AnswerVotesRow {
+  id: string;
+  votes: { count: number }[];
+}
+
+/**
+ * Question with the vote counts of its answers,
+ * as returned by the vote count query.
+ */
+export interface QuestionVotesRow {
+  answers: AnswerVotesRow[];
+}
