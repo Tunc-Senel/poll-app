@@ -6,15 +6,30 @@ $breakpoints: (
   'desktop': 1024px,
 );
 
-// === RESPOND MIXIN ===
-/// Applies the given styles up to the width of a breakpoint (desktop-first).
-/// @param {String} $breakpoint - A key of the $breakpoints map.
-@mixin respond($breakpoint) {
-  @if not map.has-key($breakpoints, $breakpoint) {
-    @error 'Unknown breakpoint: #{$breakpoint}';
+// === HELPERS ===
+/// Returns the width of a breakpoint, stops the build on unknown names.
+/// @param {String} $name - A key of the $breakpoints map.
+@function breakpoint($name) {
+  @if not map.has-key($breakpoints, $name) {
+    @error 'Unknown breakpoint: #{$name}';
   }
 
-  @media screen and (max-width: map.get($breakpoints, $breakpoint)) {
+  @return map.get($breakpoints, $name);
+}
+
+// === RESPOND MIXINS ===
+/// Applies the given styles up to the width of a breakpoint (desktop-first).
+/// @param {String} $name - A key of the $breakpoints map.
+@mixin respond($name) {
+  @media screen and (max-width: breakpoint($name)) {
+    @content;
+  }
+}
+
+/// Applies the given styles above the width of a breakpoint.
+/// @param {String} $name - A key of the $breakpoints map.
+@mixin respond-above($name) {
+  @media screen and (min-width: #{breakpoint($name) + 1px}) {
     @content;
   }
 }

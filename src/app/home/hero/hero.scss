@@ -1,0 +1,118 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+:host {
+  display: block;
+  padding-block-end: 6rem;
+
+  @include bp.respond('desktop') {
+    padding-block-end: 3rem;
+  }
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+
+  @include bp.respond('desktop') {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+}
+
+.hero__text {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  min-width: 0;
+
+  @include bp.respond('desktop') {
+    display: contents;
+  }
+}
+
+.hero__title {
+  font-size: var(--font-size-hero);
+  line-height: 0.9;
+  color: var(--color-accent);
+
+  @include bp.respond('desktop') {
+    order: 1;
+  }
+}
+
+.hero__illustration {
+  position: relative;
+  flex: 0 1 426px;
+  aspect-ratio: 852 / 840;
+
+  @include bp.respond('desktop') {
+    order: 2;
+    flex: none;
+    align-self: center;
+    width: min(100%, 320px);
+  }
+}
+
+.hero__lead {
+  margin-bottom: 1rem;
+  font-size: var(--font-size-lead);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-text-on-dark);
+
+  @include bp.respond('desktop') {
+    order: 3;
+  }
+}
+
+.hero__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @include bp.respond('desktop') {
+    order: 4;
+    align-self: center;
+  }
+}
+
+.hero__button-icon {
+  display: none;
+  width: 24px;
+  aspect-ratio: 1;
+
+  @include bp.respond('desktop') {
+    display: block;
+  }
+}
+
+// === ILLUSTRATION HOVER (desktop with mouse only) ===
+.hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.hero__image--hover {
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  @include bp.respond-above('desktop') {
+    .hero__illustration:hover {
+      .hero__image--default {
+        opacity: 0;
+      }
+
+      .hero__image--hover {
+        opacity: 1;
+      }
+    }
+  }
+}
