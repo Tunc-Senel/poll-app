@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+.survey-list__title {
+  margin-block-end: 3rem;
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: var(--font-size-section);
+  font-weight: var(--font-weight-regular);
+  text-align: center;
+}
+
+.survey-list__status {
+  color: var(--color-text-on-dark);
+  text-align: center;
+}

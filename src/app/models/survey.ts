@@ -52,3 +52,9 @@ export interface SurveyDetail extends Survey {
  * Kept apart from the survey so live updates only replace this object.
  */
 export type VoteCounts = Record<string, number>;
+
+/**
+ * Tab on Home: running or finished surveys.
+ * Shared by survey-list and survey-filter.
+ */
+export type SurveyTab = 'active' | 'past';

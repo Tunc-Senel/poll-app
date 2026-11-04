@@ -1,1 +1,12 @@
-<p>survey-list works!</p>
+<section class="survey-list content" aria-labelledby="survey-list-title">
+  <h2 id="survey-list-title" class="survey-list__title">Your surveys</h2>
+  @if (isLoading()) {
+    <p class="survey-list__status">Loading surveys …</p>
+  } @else if (errorMessage()) {
+    <p class="survey-list__status" role="alert">{{ errorMessage() }}</p>
+  } @else {
+    <app-ending-soon-surveys />
+    <app-survey-filter />
+    <app-all-surveys />
+  }
+</section>
