@@ -1,0 +1,9 @@
+// === PRIMARY BUTTON ===
+.button-primary {
+  padding: 0.75rem 0.875rem;
+  border-radius: 10px;
+  background-color: var(--color-accent-light);
+  color: var(--color-darkest);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+}
