@@ -44,5 +44,5 @@
   --font-size-lead: clamp(1.125rem, 0.9886rem + 0.6818vw, 1.5rem);
 
   --content-max-width: 1440px;
-  --space-page: 1rem;
+  --space-page: clamp(1rem, -0.6786rem + 8.3929vw, 6.875rem);
 }

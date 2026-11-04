@@ -1,0 +1,37 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 2.5rem;
+
+  @include bp.respond('tablet') {
+    padding-block: 1.5rem;
+  }
+}
+
+.logo {
+  display: block;
+  width: 118px;
+  aspect-ratio: 118 / 50;
+}
+
+.create-button {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--color-accent-light);
+  color: var(--color-darkest);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+
+  @include bp.respond('tablet') {
+    display: none;
+  }
+}

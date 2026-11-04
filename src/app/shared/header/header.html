@@ -1,1 +1,10 @@
-<p>header works!</p>
+<header class="content">
+  @if (variant() === 'home') {
+    <img class="logo" src="images/logo-yellow.png" alt="Poll App" />
+  } @else {
+    <a routerLink="/">
+      <img class="logo" src="images/logo-dark.png" alt="Poll App, back to home" />
+    </a>
+    <button class="create-button" type="button" (click)="openCreateSurvey()">Create survey</button>
+  }
+</header>

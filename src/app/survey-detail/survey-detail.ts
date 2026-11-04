@@ -1,7 +1,8 @@
 import { Component, input, InputSignal } from '@angular/core';
+import { Header } from '../shared/header/header';
 
 @Component({
-  imports: [],
+  imports: [Header],
   selector: 'app-survey-detail',
   styleUrl: './survey-detail.scss',
   templateUrl: './survey-detail.html',
