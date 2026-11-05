@@ -1,0 +1,29 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+.ending-soon__title {
+  margin-block-end: 2rem;
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-medium);
+}
+
+.ending-soon__list {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  margin: 0;
+  padding: 0 0 2.5rem;
+  list-style: none;
+}
+
+.ending-soon__item {
+  flex: 0 0 321px;
+
+  @include bp.respond('tablet') {
+    flex-basis: 250px;
+  }
+}

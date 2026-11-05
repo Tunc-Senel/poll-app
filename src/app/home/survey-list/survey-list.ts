@@ -23,7 +23,7 @@ export class SurveyList implements OnInit {
   /**
    * All surveys from Supabase, unfiltered.
    */
-  private readonly surveys: WritableSignal<Survey[]> = signal<Survey[]>([]);
+  protected readonly surveys: WritableSignal<Survey[]> = signal<Survey[]>([]);
 
   /**
    * Selected tab, switched by survey-filter from step 12 on.
@@ -55,8 +55,8 @@ export class SurveyList implements OnInit {
     const showActive: boolean = this.activeTab() === 'active';
     const category: Category | null = this.selectedCategory();
     return this.surveys()
-      .filter((survey) => isSurveyActive(survey, now) === showActive)
-      .filter((survey) => category === null || survey.category === category)
+      .filter((survey: Survey): boolean => isSurveyActive(survey, now) === showActive)
+      .filter((survey: Survey): boolean => category === null || survey.category === category)
       .sort(showActive ? byEarliestEnd : byLatestEnd);
   });
 

@@ -1,1 +1,12 @@
-<p>ending-soon-surveys works!</p>
+@if (endingSoonSurveys().length > 0) {
+  <section class="ending-soon" aria-labelledby="ending-soon-title">
+    <h3 id="ending-soon-title" class="ending-soon__title">Ending soon surveys</h3>
+    <ul class="ending-soon__list custom-scrollbar">
+      @for (survey of endingSoonSurveys(); track survey.id) {
+        <li class="ending-soon__item">
+          <app-survey-card [survey]="survey" />
+        </li>
+      }
+    </ul>
+  </section>
+}

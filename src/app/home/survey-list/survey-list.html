@@ -5,7 +5,7 @@
   } @else if (errorMessage()) {
     <p class="survey-list__status" role="alert">{{ errorMessage() }}</p>
   } @else {
-    <app-ending-soon-surveys />
+    <app-ending-soon-surveys [surveys]="surveys()" />
     <app-survey-filter />
     <app-all-surveys />
   }
