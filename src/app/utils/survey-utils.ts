@@ -1,3 +1,4 @@
+import { MS_PER_DAY } from '../constants/survey-constants';
 import { Survey } from '../models/survey';
 
 /**
@@ -33,4 +34,20 @@ export function byLatestEnd(a: Survey, b: Survey): number {
     return 0;
   }
   return b.endDate.getTime() - a.endDate.getTime();
+}
+
+/**
+ * Calendar days from now until the end date: 0 is today, 1 is tomorrow, negative is past.
+ * Counts whole days, so the time of day does not matter.
+ */
+export function daysUntil(endDate: Date, now: Date): number {
+  return (toDayStamp(endDate) - toDayStamp(now)) / MS_PER_DAY;
+}
+
+/**
+ * Midnight of the local calendar day as a UTC timestamp.
+ * UTC has no daylight saving time, so every day is exactly MS_PER_DAY long.
+ */
+function toDayStamp(date: Date): number {
+  return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
 }

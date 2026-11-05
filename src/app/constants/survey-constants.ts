@@ -28,3 +28,8 @@ export const MIN_ANSWERS: number = 2;
  * Upper limit of answer options per question in the create form.
  */
 export const MAX_ANSWERS: number = 6;
+
+/**
+ * Milliseconds of one day, used to count calendar days.
+ */
+export const MS_PER_DAY: number = 24 * 60 * 60 * 1000;
