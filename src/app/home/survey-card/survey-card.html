@@ -1,1 +1,7 @@
-<p>survey-card works!</p>
+<article class="survey-card">
+  <span class="survey-card__category">{{ survey().category }}</span>
+  <h4 class="survey-card__title">
+    <a class="survey-card__link" [routerLink]="['/survey', survey().id]">{{ survey().title }}</a>
+  </h4>
+  <span class="survey-card__deadline">{{ survey().endDate | deadline }}</span>
+</article>
