@@ -1,1 +1,32 @@
-<p>dropdown works!</p>
+<div class="dropdown__anchor">
+  <button
+    #toggleButton
+    type="button"
+    class="dropdown__toggle"
+    [attr.aria-expanded]="isOpen()"
+    (click)="toggle()"
+  >
+    {{ label() }}
+    <span class="dropdown__arrow" aria-hidden="true"></span>
+  </button>
+  @if (isOpen()) {
+    <ul class="dropdown__menu">
+      @for (option of options(); track option.value) {
+        <li>
+          <button
+            type="button"
+            class="dropdown__option"
+            [class.dropdown__option--selected]="option.value === selected()"
+            [attr.aria-pressed]="option.value === selected()"
+            (click)="select(option.value)"
+          >
+            {{ option.label }}
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</div>
+@if (selectedLabel()) {
+  <span class="dropdown__selected">{{ selectedLabel() }}</span>
+}
