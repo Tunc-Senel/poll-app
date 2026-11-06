@@ -4,6 +4,10 @@
   display: block;
 }
 
+.ending-soon {
+  margin-block-end: 1.5rem;
+}
+
 .ending-soon__title {
   margin-block-end: 2rem;
   color: var(--color-text-on-dark);
@@ -16,7 +20,7 @@
   gap: 2rem;
   overflow-x: auto;
   margin: 0;
-  padding: 0 0 2.5rem;
+  padding: 0 0 1.5rem;
   list-style: none;
 }
 
