@@ -26,14 +26,14 @@ export class SurveyList implements OnInit {
   protected readonly surveys: WritableSignal<Survey[]> = signal<Survey[]>([]);
 
   /**
-   * Selected tab, switched by survey-filter from step 12 on.
+   * Selected tab, switched by survey-filter.
    */
-  private readonly activeTab: WritableSignal<SurveyTab> = signal<SurveyTab>('active');
+  protected readonly activeTab: WritableSignal<SurveyTab> = signal<SurveyTab>('active');
 
   /**
-   * Selected category; null stands for "All Surveys".
+   * Selected category, switched by survey-filter; null stands for "All Surveys".
    */
-  private readonly selectedCategory: WritableSignal<Category | null> = signal<Category | null>(
+  protected readonly selectedCategory: WritableSignal<Category | null> = signal<Category | null>(
     null,
   );
 

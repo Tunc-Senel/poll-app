@@ -1,1 +1,24 @@
-<p>survey-filter works!</p>
+<div class="survey-filter__tabs" role="group" aria-label="Survey status">
+  <button
+    type="button"
+    class="survey-filter__tab"
+    [attr.aria-pressed]="activeTab() === 'active'"
+    (click)="tabChanged.emit('active')"
+  >
+    Active survey
+  </button>
+  <button
+    type="button"
+    class="survey-filter__tab"
+    [attr.aria-pressed]="activeTab() === 'past'"
+    (click)="tabChanged.emit('past')"
+  >
+    Past survey
+  </button>
+</div>
+<app-dropdown
+  label="Sort by categories"
+  [options]="categoryOptions"
+  [selected]="selectedCategory()"
+  (optionSelected)="categoryChanged.emit($event)"
+/>

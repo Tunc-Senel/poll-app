@@ -6,7 +6,12 @@
     <p class="survey-list__status" role="alert">{{ errorMessage() }}</p>
   } @else {
     <app-ending-soon-surveys [surveys]="surveys()" />
-    <app-survey-filter />
+    <app-survey-filter
+      [activeTab]="activeTab()"
+      [selectedCategory]="selectedCategory()"
+      (tabChanged)="activeTab.set($event)"
+      (categoryChanged)="selectedCategory.set($event)"
+    />
     <app-all-surveys />
   }
 </section>
