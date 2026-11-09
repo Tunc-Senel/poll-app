@@ -1,0 +1,39 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+// max-height shows about three rows like home.png and depends on min-height and gap of survey-list-item.
+.all-surveys__list {
+  --list-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--list-gap);
+  max-height: 26.5rem;
+  margin: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 1.25rem;
+  overflow-y: auto;
+  list-style: none;
+
+  @include bp.respond('tablet') {
+    max-height: none;
+    padding-inline-end: 0;
+    overflow-y: visible;
+  }
+}
+
+.all-surveys__item {
+  flex: 0 0 calc((100% - var(--list-gap)) / 2);
+  min-width: 0;
+
+  @include bp.respond('tablet') {
+    flex-basis: 100%;
+  }
+}
+
+.all-surveys__empty {
+  color: var(--color-text-on-dark);
+  text-align: center;
+}

@@ -1,1 +1,12 @@
-<p>all-surveys works!</p>
+<h3 class="visually-hidden">{{ heading() }}</h3>
+@if (surveys().length > 0) {
+  <ul class="all-surveys__list custom-scrollbar">
+    @for (survey of surveys(); track survey.id) {
+      <li class="all-surveys__item">
+        <app-survey-list-item [survey]="survey" />
+      </li>
+    }
+  </ul>
+} @else {
+  <p class="all-surveys__empty">No surveys in this category.</p>
+}

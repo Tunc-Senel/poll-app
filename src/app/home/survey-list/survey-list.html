@@ -12,6 +12,6 @@
       (tabChanged)="activeTab.set($event)"
       (categoryChanged)="selectedCategory.set($event)"
     />
-    <app-all-surveys />
+    <app-all-surveys [surveys]="filteredSurveys()" [tab]="activeTab()" />
   }
 </section>
