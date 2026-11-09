@@ -1,2 +1,19 @@
 <app-header variant="detail" />
-<p>survey-detail works!</p>
+<main class="survey-detail content">
+  @if (isLoading()) {
+    <p class="survey-detail__status">Loading survey …</p>
+  } @else if (survey()) {
+    <section class="survey-detail__form">
+      <app-survey-form />
+    </section>
+    <section class="survey-detail__results">
+      <app-survey-results />
+    </section>
+  } @else {
+    <section class="survey-detail__not-found">
+      <h1>Survey not found</h1>
+      <p>This survey does not exist or could not be loaded.</p>
+      <a routerLink="/">Back to home</a>
+    </section>
+  }
+</main>
