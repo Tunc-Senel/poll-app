@@ -1,1 +1,7 @@
-<p>survey-list-item works!</p>
+<article class="survey-list-item">
+  <span class="survey-list-item__category">{{ survey().category }}</span>
+  <h4 class="survey-list-item__title">
+    <a class="survey-list-item__link" [routerLink]="['/survey', survey().id]">{{ survey().title }}</a>
+  </h4>
+  <span class="survey-list-item__deadline">{{ survey().endDate | deadline }}</span>
+</article>
