@@ -33,3 +33,8 @@ export const MAX_ANSWERS: number = 6;
  * Milliseconds of one day, used to count calendar days.
  */
 export const MS_PER_DAY: number = 24 * 60 * 60 * 1000;
+
+/**
+ * localStorage key for the ids of all surveys this browser has voted in.
+ */
+export const VOTED_SURVEYS_KEY: string = 'pollApp.votedSurveys';
