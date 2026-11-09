@@ -4,9 +4,12 @@
   display: block;
 }
 
-// max-height shows about three rows like home.png and depends on min-height and gap of survey-list-item.
+/**
+ * max-height shows about three rows like home.png and depends on min-height and gap of survey-list-item.
+ */
 .all-surveys__list {
   --list-gap: 1rem;
+
   display: flex;
   flex-wrap: wrap;
   gap: var(--list-gap);
