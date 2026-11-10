@@ -1,0 +1,101 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+/**
+ * Fills the height of its section, so the second empty-state line
+ * can sit at the bottom next to the form card on desktop.
+ */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--color-dark);
+}
+
+.survey-results__toggle {
+  display: none;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.5rem;
+  margin-block-end: 1.5rem;
+  padding: 0.5rem;
+  background-color: transparent;
+  font-family: var(--font-base);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+
+  @include bp.respond('desktop') {
+    display: inline-flex;
+  }
+}
+
+.survey-results__toggle:focus-visible {
+  outline: 2px solid var(--color-dark);
+  outline-offset: 2px;
+}
+
+/**
+ * Same CSS triangle as in the dropdown: points down when closed, up when open.
+ */
+.survey-results__arrow {
+  border-inline: 6px solid transparent;
+  border-top: 7px solid currentColor;
+}
+
+.survey-results__toggle[aria-expanded='true'] .survey-results__arrow {
+  transform: rotate(180deg);
+}
+
+/**
+ * Pushes the results to the bottom, so the last bar ends level with the form card
+ * like in survey-detail.png. In the empty state the auto margin of the last line wins.
+ */
+.survey-results__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.survey-results__content--collapsed {
+  @include bp.respond('desktop') {
+    display: none;
+  }
+}
+
+.survey-results__title {
+  margin: 0;
+  color: var(--color-darkest);
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.1;
+}
+
+.survey-results__live {
+  color: var(--color-accent);
+}
+
+.survey-results__questions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.survey-results__empty {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.4;
+}
+
+.survey-results__empty--last {
+  margin-block-start: auto;
+  text-align: center;
+
+  @include bp.respond('desktop') {
+    margin-block-start: 0;
+  }
+}

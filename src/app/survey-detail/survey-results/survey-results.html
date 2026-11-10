@@ -1,1 +1,36 @@
-<p>survey-results works!</p>
+<button
+  class="survey-results__toggle"
+  type="button"
+  aria-controls="survey-results-content"
+  [attr.aria-expanded]="isExpanded()"
+  (click)="toggleExpanded()"
+>
+  {{ isExpanded() ? 'Close results' : 'See results' }}
+  <span class="survey-results__arrow" aria-hidden="true"></span>
+</button>
+<div
+  id="survey-results-content"
+  class="survey-results__content"
+  [class.survey-results__content--collapsed]="!isExpanded()"
+>
+  <h2 class="survey-results__title">
+    Survey results
+    @if (isActive()) {
+      <span class="survey-results__live">LIVE</span>
+    }
+  </h2>
+  @if (hasVotes()) {
+    <ol class="survey-results__questions">
+      @for (question of questions(); track question.id) {
+        <li>
+          <app-result-question [question]="question" [voteCounts]="voteCounts()" />
+        </li>
+      }
+    </ol>
+  } @else {
+    <p class="survey-results__empty">
+      Results will be shown here after participants complete the survey.
+    </p>
+    <p class="survey-results__empty survey-results__empty--last">There are no answers yet.</p>
+  }
+</div>
