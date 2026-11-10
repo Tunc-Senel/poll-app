@@ -51,3 +51,10 @@ export function daysUntil(endDate: Date, now: Date): number {
 function toDayStamp(date: Date): number {
   return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
 }
+
+/**
+ * Letter shown before an answer: position 1 is A, 2 is B and so on.
+ */
+export function toAnswerLetter(position: number): string {
+  return String.fromCharCode('A'.charCodeAt(0) + position - 1);
+}

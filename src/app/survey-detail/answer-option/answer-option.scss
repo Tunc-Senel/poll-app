@@ -1,0 +1,67 @@
+:host {
+  display: block;
+}
+
+.answer-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0 0.5rem;
+  border-radius: 4px;
+  font-size: var(--font-size-s);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+/**
+ * Checkbox and radio button share the same square look from the design.
+ * The check mark is an inline SVG in the color of --color-darkest.
+ */
+.answer-option__input {
+  flex: 0 0 auto;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-block-start: 0.125rem;
+  margin-inline-end: 0.5rem;
+  border: 2px solid var(--color-dark);
+  border-radius: 3px;
+  background-color: transparent;
+  appearance: none;
+  cursor: inherit;
+}
+
+.answer-option__input:checked {
+  border-color: var(--color-accent);
+  background: var(--color-accent)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23221227' stroke-width='2'/%3E%3C/svg%3E")
+    center / 80% no-repeat;
+}
+
+.answer-option__input:focus-visible {
+  outline: 2px solid var(--color-dark);
+  outline-offset: 2px;
+}
+
+.answer-option__letter {
+  font-weight: var(--font-weight-bold);
+}
+
+.answer-option__text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.answer-option:has(.answer-option__input:disabled) {
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .answer-option:has(.answer-option__input:enabled):hover {
+    background-color: var(--color-option-selected);
+  }
+
+  .answer-option:has(.answer-option__input:enabled:not(:checked)):hover .answer-option__input {
+    border-color: transparent;
+    background-color: var(--color-checkbox-hover);
+  }
+}

@@ -1,1 +1,12 @@
-<p>answer-option works!</p>
+<label class="answer-option">
+  <input
+    #box
+    class="answer-option__input"
+    [type]="inputType()"
+    [name]="groupName()"
+    [checked]="isChecked()"
+    (change)="toggled.emit(box.checked)"
+  />
+  <span class="answer-option__letter">{{ letter() }}.</span>
+  <span class="answer-option__text">{{ answer().text }}</span>
+</label>
