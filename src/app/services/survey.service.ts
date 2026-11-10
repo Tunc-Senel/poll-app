@@ -9,6 +9,7 @@ import {
   QuestionWithAnswersRow,
   SurveyDetailRow,
   SurveyRow,
+  VoteInsertRow,
 } from '../models/survey-row';
 
 /**
@@ -70,6 +71,18 @@ export class SurveyService {
       .overrideTypes<QuestionVotesRow[], { merge: false }>();
     this.throwIfError(error);
     return this.toVoteCounts(data ?? []);
+  }
+
+  /**
+   * Saves one vote row per chosen answer, all in a single insert.
+   * Realtime then reports each row like any other vote.
+   */
+  async castVotes(answerIds: string[]): Promise<void> {
+    const rows: VoteInsertRow[] = answerIds.map(
+      (answerId: string): VoteInsertRow => ({ answer_id: answerId }),
+    );
+    const { error } = await this.supabase.from('votes').insert(rows);
+    this.throwIfError(error);
   }
 
   /**

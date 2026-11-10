@@ -1,1 +1,24 @@
-<p>survey-form works!</p>
+<app-survey-info [survey]="survey()" [isActive]="isActive()" />
+<form class="survey-form__form" (submit)="submitVotes($event)">
+  <div class="survey-form__questions">
+    @for (question of survey().questions; track question.id) {
+      <app-survey-question
+        class="survey-form__question"
+        [question]="question"
+        [selectedIds]="selectionFor(question.id)"
+        [isDisabled]="isLocked()"
+        (selectionChanged)="updateSelection(question.id, $event)"
+      />
+    }
+  </div>
+  @if (hasVoted()) {
+    <p class="survey-form__message">You have already voted.</p>
+  } @else if (isActive()) {
+    @if (errorMessage()) {
+      <p class="survey-form__message" role="alert">{{ errorMessage() }}</p>
+    }
+    <button class="button-primary survey-form__submit" type="submit" [disabled]="!canSubmit()">
+      Complete survey
+    </button>
+  }
+</form>

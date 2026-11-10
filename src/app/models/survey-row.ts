@@ -64,3 +64,10 @@ export interface AnswerVotesRow {
 export interface QuestionVotesRow {
   answers: AnswerVotesRow[];
 }
+
+/**
+ * New row for the votes table; id and created_at are set by Supabase.
+ */
+export interface VoteInsertRow {
+  answer_id: string;
+}

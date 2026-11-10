@@ -1,0 +1,69 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+:host {
+  display: block;
+  padding: 2.5rem;
+  border-top-right-radius: 160px;
+  background-color: var(--color-form);
+  color: var(--color-dark);
+
+  @include bp.respond('tablet') {
+    padding-block: 2.5rem;
+    padding-inline: 0.75rem;
+    border-top-right-radius: 80px;
+  }
+}
+
+.survey-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-block-start: 2.5rem;
+}
+
+/**
+ * Two questions per row on desktop and tablet, one on mobile.
+ * --question-gap is needed by gap and by the width calculation of each question.
+ */
+.survey-form__questions {
+  --question-gap: 2.5rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem var(--question-gap);
+
+  @include bp.respond('tablet') {
+    gap: 1.5rem;
+  }
+}
+
+.survey-form__question {
+  flex: 0 0 calc((100% - var(--question-gap)) / 2);
+  min-width: 0;
+
+  @include bp.respond('tablet') {
+    flex-basis: 100%;
+  }
+}
+
+.survey-form__message {
+  align-self: flex-end;
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+}
+
+.survey-form__submit {
+  align-self: flex-end;
+  font-size: var(--font-size-s);
+  padding: 0.5rem 0.75rem;
+  color: var(--color-dark);
+
+  @include bp.respond('tablet') {
+    font-size: var(--font-size-m);
+  }
+}
+
+.survey-form__submit:disabled {
+  background-color: var(--color-accent-pale);
+  cursor: not-allowed;
+}

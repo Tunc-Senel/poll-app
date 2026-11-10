@@ -58,3 +58,8 @@ export type VoteCounts = Record<string, number>;
  * Shared by survey-list and survey-filter.
  */
 export type SurveyTab = 'active' | 'past';
+
+/**
+ * Chosen answer ids per question id in the voting form.
+ */
+export type AnswerSelection = Record<string, string[]>;

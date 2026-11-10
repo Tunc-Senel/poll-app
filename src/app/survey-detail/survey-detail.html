@@ -2,9 +2,13 @@
 <main class="survey-detail content">
   @if (isLoading()) {
     <p class="survey-detail__status">Loading survey …</p>
-  } @else if (survey()) {
+  } @else if (survey(); as currentSurvey) {
     <section class="survey-detail__form">
-      <app-survey-form />
+      <app-survey-form
+        [survey]="currentSurvey"
+        [hasVoted]="hasVoted()"
+        (voted)="hasVoted.set(true)"
+      />
     </section>
     <section class="survey-detail__results">
       <app-survey-results />

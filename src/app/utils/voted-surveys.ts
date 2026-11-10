@@ -21,6 +21,22 @@ export function hasVotedFor(surveyId: string): boolean {
 }
 
 /**
+ * Stores the survey id, so the form stays locked after a reload.
+ * A full or blocked localStorage is ignored, because the vote itself is already saved.
+ */
+export function markAsVoted(surveyId: string): void {
+  const votedIds: string[] = readVotedSurveyIds();
+  if (votedIds.includes(surveyId)) {
+    return;
+  }
+  try {
+    localStorage.setItem(VOTED_SURVEYS_KEY, JSON.stringify([...votedIds, surveyId]));
+  } catch {
+    return;
+  }
+}
+
+/**
  * Type guard for the parsed localStorage value, so no cast with "as" is needed.
  */
 function isStringArray(value: unknown): value is string[] {
