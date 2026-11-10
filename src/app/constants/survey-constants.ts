@@ -43,3 +43,8 @@ export const VOTED_SURVEYS_KEY: string = 'pollApp.votedSurveys';
  * Only date format of the app, used by the deadline pipe and survey-info.
  */
 export const DATE_FORMAT: string = 'dd.MM.yyyy';
+
+/**
+ * Factor that turns a share between 0 and 1 into percent.
+ */
+export const PERCENT_SCALE: number = 100;

@@ -1,1 +1,11 @@
-<p>result-question works!</p>
+<h3 class="result-question__title">
+  <span>{{ question().position }}.</span>
+  <span>{{ question().text }}</span>
+</h3>
+<ul class="result-question__bars">
+  @for (result of results(); track result.answer.id) {
+    <li>
+      <app-result-bar [answer]="result.answer" [percent]="result.percent" />
+    </li>
+  }
+</ul>

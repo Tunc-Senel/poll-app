@@ -1,4 +1,4 @@
-import { MS_PER_DAY } from '../constants/survey-constants';
+import { MS_PER_DAY, PERCENT_SCALE } from '../constants/survey-constants';
 import { Survey } from '../models/survey';
 
 /**
@@ -57,4 +57,15 @@ function toDayStamp(date: Date): number {
  */
 export function toAnswerLetter(position: number): string {
   return String.fromCharCode('A'.charCodeAt(0) + position - 1);
+}
+
+/**
+ * Share of part in total as a whole percent.
+ * Returns 0 while there are no votes yet, instead of dividing by zero.
+ */
+export function toPercent(part: number, total: number): number {
+  if (total === 0) {
+    return 0;
+  }
+  return Math.round((part / total) * PERCENT_SCALE);
 }
