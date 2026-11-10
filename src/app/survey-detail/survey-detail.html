@@ -7,11 +7,16 @@
       <app-survey-form
         [survey]="currentSurvey"
         [hasVoted]="hasVoted()"
-        (voted)="hasVoted.set(true)"
+        [isActive]="isActive()"
+        (voted)="onVoted()"
       />
     </section>
     <section class="survey-detail__results">
-      <app-survey-results />
+      <app-survey-results
+        [questions]="currentSurvey.questions"
+        [voteCounts]="voteCounts()"
+        [isActive]="isActive()"
+      />
     </section>
   } @else {
     <section class="survey-detail__not-found">

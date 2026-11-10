@@ -14,7 +14,6 @@ import {
 
 import { AnswerSelection, Question, SurveyDetail } from '../../models/survey';
 import { SurveyService } from '../../services/survey.service';
-import { isSurveyActive } from '../../utils/survey-utils';
 import { markAsVoted } from '../../utils/voted-surveys';
 import { SurveyInfo } from '../survey-info/survey-info';
 import { SurveyQuestion } from '../survey-question/survey-question';
@@ -44,6 +43,12 @@ export class SurveyForm {
   readonly hasVoted: InputSignal<boolean> = input.required<boolean>();
 
   /**
+   * False for ended surveys, which can be viewed but not answered.
+   * Calculated once by survey-detail and passed on to survey-info.
+   */
+  readonly isActive: InputSignal<boolean> = input.required<boolean>();
+
+  /**
    * Fires after the votes are saved, so survey-detail can update its voted state.
    */
   readonly voted: OutputEmitterRef<void> = output<void>();
@@ -69,13 +74,6 @@ export class SurveyForm {
    * Shown above the button when saving failed; empty otherwise.
    */
   protected readonly errorMessage: WritableSignal<string> = signal<string>('');
-
-  /**
-   * False for ended surveys, which can be viewed but not answered.
-   */
-  protected readonly isActive: Signal<boolean> = computed((): boolean =>
-    isSurveyActive(this.survey(), new Date()),
-  );
 
   /**
    * Disables all questions after voting, while saving and for ended surveys.
@@ -106,9 +104,10 @@ export class SurveyForm {
    * Replaces the selection of one question and keeps all others.
    */
   protected updateSelection(questionId: string, answerIds: string[]): void {
-    this.selectedAnswers.update(
-      (current: AnswerSelection): AnswerSelection => ({ ...current, [questionId]: answerIds }),
-    );
+    this.selectedAnswers.update((current: AnswerSelection): AnswerSelection => ({
+      ...current,
+      [questionId]: answerIds,
+    }));
   }
 
   /**

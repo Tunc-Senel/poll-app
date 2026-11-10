@@ -30,6 +30,7 @@
 
 .survey-detail__results {
   flex: 0 1 316px;
+  align-self: stretch;
   min-width: 0;
 
   @include bp.respond('desktop') {
