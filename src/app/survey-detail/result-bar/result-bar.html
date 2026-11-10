@@ -1,1 +1,9 @@
-<p>result-bar works!</p>
+<span class="result-bar__letter" aria-hidden="true">{{ letter() }}</span>
+<meter
+  class="result-bar__meter"
+  min="0"
+  [max]="maxPercent"
+  [value]="percent()"
+  [attr.aria-label]="label()"
+></meter>
+<span class="result-bar__percent" aria-hidden="true">{{ percent() }}%</span>
