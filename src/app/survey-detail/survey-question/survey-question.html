@@ -1,1 +1,24 @@
-<p>survey-question works!</p>
+<fieldset class="survey-question" [disabled]="isDisabled()">
+  <legend class="survey-question__legend">
+    <h2 class="survey-question__title">
+      <span>{{ question().position }}.</span>
+      <span>{{ question().text }}</span>
+    </h2>
+  </legend>
+  @if (question().allowMultiple) {
+    <span class="survey-question__hint">More than one answers are possible.</span>
+  }
+  <ul class="survey-question__answers">
+    @for (answer of question().answers; track answer.id) {
+      <li>
+        <app-answer-option
+          [answer]="answer"
+          [groupName]="question().id"
+          [allowMultiple]="question().allowMultiple"
+          [isChecked]="selectedIds().includes(answer.id)"
+          (toggled)="toggleAnswer(answer.id, $event)"
+        />
+      </li>
+    }
+  </ul>
+</fieldset>

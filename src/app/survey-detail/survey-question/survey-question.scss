@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+/**
+ * min-width: 0 overrides the min-content default of fieldset,
+ * otherwise long answers stop the question from shrinking.
+ */
+.survey-question {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.survey-question__legend {
+  padding: 0;
+}
+
+.survey-question__title {
+  display: flex;
+  gap: 0.25rem;
+  font-family: var(--font-base);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.5rem;
+}
+
+.survey-question__hint {
+  display: block;
+  margin-block-start: 0.25rem;
+  padding-inline-start: 1.375rem;
+  font-size: var(--font-size-s);
+}
+
+.survey-question__answers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-block: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
