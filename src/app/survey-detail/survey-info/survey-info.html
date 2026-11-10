@@ -1,1 +1,18 @@
-<p>survey-info works!</p>
+<header class="survey-info">
+  <div class="survey-info__top">
+    <span class="survey-info__badge" [class.survey-info__badge--ended]="!isActive()">
+      {{ isActive() ? 'Published' : 'Ended' }}
+    </span>
+    <a class="survey-info__close" routerLink="/" aria-label="Back to home"></a>
+  </div>
+  <div class="survey-info__meta">
+    @if (survey().endDate; as endDate) {
+      <span>{{ isActive() ? 'Ends on' : 'Ended on' }} {{ endDate | date: dateFormat }}</span>
+    }
+    <span class="survey-info__category">Category: {{ survey().category }}</span>
+  </div>
+  <h1 class="survey-info__title">{{ survey().title }}</h1>
+  @if (survey().description; as description) {
+    <p class="survey-info__description">{{ description }}</p>
+  }
+</header>

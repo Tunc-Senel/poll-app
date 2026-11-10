@@ -1,0 +1,114 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+.survey-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  @include bp.respond('mobile') {
+    gap: 1rem;
+  }
+}
+
+.survey-info__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.survey-info__badge {
+  padding-block: 0.1875rem;
+  padding-inline: 0.5rem 0.75rem;
+  border-radius: 4px 12px 0 0;
+  background-color: var(--color-accent);
+  color: var(--color-darkest);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.survey-info__badge--ended {
+  background-color: var(--color-accent-pale);
+}
+
+.survey-info__close {
+  display: none;
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  margin-inline-end: 0.5rem;
+  background-color: var(--color-accent-light);
+  color: var(--color-darkest);
+
+  @include bp.respond('tablet') {
+    display: block;
+  }
+}
+
+/**
+ * Two crossed bars in the current text color form the X, so no icon file is needed.
+ */
+.survey-info__close::before,
+.survey-info__close::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 25%;
+  width: 50%;
+  height: 2px;
+  background-color: currentColor;
+}
+
+.survey-info__close::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.survey-info__close::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.survey-info__close:focus-visible {
+  outline: 2px solid var(--color-dark);
+  outline-offset: 2px;
+}
+
+.survey-info__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+
+  @include bp.respond('mobile') {
+    flex-direction: column;
+  }
+}
+
+.survey-info__category {
+  margin-inline-start: auto;
+  margin-inline-end: 0.875rem;
+
+  @include bp.respond('mobile') {
+    margin-inline-start: initial;
+  }
+}
+
+.survey-info__title {
+  color: var(--color-accent-strong);
+  font-size: var(--font-size-title);
+  line-height: 0.9;
+  overflow-wrap: anywhere;
+}
+
+.survey-info__description {
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+
+  @include bp.respond('mobile') {
+    padding-block-start: 0.5rem;
+  }
+}
