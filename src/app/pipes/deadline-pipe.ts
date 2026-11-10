@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 
+import { DATE_FORMAT } from '../constants/survey-constants';
 import { daysUntil } from '../utils/survey-utils';
 
 /**
@@ -23,7 +24,7 @@ export class DeadlinePipe implements PipeTransform {
     }
     const days: number = daysUntil(endDate, new Date());
     if (days < 0) {
-      return `Ended on ${formatDate(endDate, 'dd.MM.yyyy', this.locale)}`;
+      return `Ended on ${formatDate(endDate, DATE_FORMAT, this.locale)}`;
     }
     return this.formatRemaining(days);
   }
