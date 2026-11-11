@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   effect,
+  EffectCleanupRegisterFn,
   inject,
   input,
   InputSignal,
@@ -12,7 +13,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { SurveyDetail as SurveyDetailData, VoteCounts } from '../models/survey';
+import { Answer, Question, SurveyDetail as SurveyDetailData, VoteCounts } from '../models/survey';
 import { SurveyService } from '../services/survey.service';
 import { Header } from '../shared/header/header';
 import { isSurveyActive } from '../utils/survey-utils';
@@ -21,8 +22,18 @@ import { SurveyForm } from './survey-form/survey-form';
 import { SurveyResults } from './survey-results/survey-results';
 
 /**
+ * State of one effect run, i.e. of one id.
+ * isCancelled turns true when the id changes or the page is left.
+ * unsubscribe is set as soon as the realtime subscription exists.
+ */
+interface VoteSubscription {
+  isCancelled: boolean;
+  unsubscribe: (() => void) | null;
+}
+
+/**
  * Detail page of one survey: voting form on the left, results on the right.
- * Owns the loaded survey and the voted state and hands both to its children.
+ * Owns the loaded survey, the vote counts and the voted state and hands them to its children.
  * The router reuses this component when only the id changes, so loading follows the id.
  */
 @Component({
@@ -80,24 +91,27 @@ export class SurveyDetail {
    * Reloads the page content whenever the id changes.
    * Only the id is tracked. fetchSurvey runs untracked, so signals it reads
    * synchronously before its first await do not become dependencies of the effect.
+   * onCleanup runs before the next id and when the page is left, and ends this run.
    */
   constructor() {
-    effect((): void => {
+    effect((onCleanup: EffectCleanupRegisterFn): void => {
       const id: string = this.id();
-      untracked((): Promise<void> => this.fetchSurvey(id));
+      const subscription: VoteSubscription = { isCancelled: false, unsubscribe: null };
+      untracked((): Promise<void> => this.fetchSurvey(id, subscription));
+      onCleanup((): void => this.endSubscription(subscription));
     });
   }
 
   /**
    * Loads the survey for the given id and reads the voted state for it.
-   * A response that arrives after the id has changed again is dropped,
-   * so a slow request for an old survey cannot overwrite the current one.
+   * A response that arrives after this run was cancelled is dropped, so a slow request
+   * cannot overwrite the current survey and cannot start a subscription nobody ends.
    */
-  private async fetchSurvey(id: string): Promise<void> {
+  private async fetchSurvey(id: string, subscription: VoteSubscription): Promise<void> {
     this.isLoading.set(true);
     this.voteCounts.set({});
     const survey: SurveyDetailData | null = await this.loadSurveyOrNull(id);
-    const isOutdated: boolean = id !== this.id();
+    const isOutdated: boolean = subscription.isCancelled || id !== this.id();
     if (isOutdated) {
       return;
     }
@@ -105,13 +119,60 @@ export class SurveyDetail {
     this.hasVoted.set(survey !== null && hasVotedFor(id));
     this.isLoading.set(false);
     if (survey !== null) {
-      this.fetchVoteCounts(id);
+      this.followVoteCounts(survey, subscription);
     }
   }
 
   /**
+   * Loads the vote counts once and keeps them up to date for running surveys.
+   * The subscription reloads the counts as soon as it is active and after every new vote.
+   * Ended surveys cannot get new votes, so they get no subscription.
+   */
+  private followVoteCounts(survey: SurveyDetailData, subscription: VoteSubscription): void {
+    this.fetchVoteCounts(survey.id);
+    if (!this.isActive()) {
+      return;
+    }
+    subscription.unsubscribe = this.surveyService.subscribeToVotes(
+      this.answerIdsOf(survey),
+      survey.id,
+      (): void => this.onVotesChanged(survey.id, subscription),
+    );
+  }
+
+  /**
+   * Reloads the counts after a realtime change, unless this run was cancelled meanwhile.
+   * A late event of the old survey would otherwise raise latestVoteCountsRequest
+   * and make the first count request of the new survey look outdated.
+   */
+  private onVotesChanged(surveyId: string, subscription: VoteSubscription): void {
+    if (!subscription.isCancelled) {
+      this.fetchVoteCounts(surveyId);
+    }
+  }
+
+  /**
+   * All answer ids of the survey; the realtime filter only reports votes on these.
+   */
+  private answerIdsOf(survey: SurveyDetailData): string[] {
+    return survey.questions.flatMap((question: Question): string[] =>
+      question.answers.map((answer: Answer): string => answer.id),
+    );
+  }
+
+  /**
+   * Cancels the run of the old id: a survey that is still loading no longer subscribes,
+   * and an existing subscription is ended.
+   */
+  private endSubscription(subscription: VoteSubscription): void {
+    subscription.isCancelled = true;
+    subscription.unsubscribe?.();
+  }
+
+  /**
    * Called by survey-form after the own votes are saved:
-   * locks the form and reloads the counts, so the results include the new votes.
+   * locks the form and reloads the counts right away. Realtime reports the same votes
+   * a moment later; the counter in fetchVoteCounts keeps only the newest response.
    */
   protected onVoted(): void {
     this.hasVoted.set(true);
