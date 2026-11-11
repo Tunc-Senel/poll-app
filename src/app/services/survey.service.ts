@@ -78,9 +78,9 @@ export class SurveyService {
    * Realtime then reports each row like any other vote.
    */
   async castVotes(answerIds: string[]): Promise<void> {
-    const rows: VoteInsertRow[] = answerIds.map(
-      (answerId: string): VoteInsertRow => ({ answer_id: answerId }),
-    );
+    const rows: VoteInsertRow[] = answerIds.map((answerId: string): VoteInsertRow => ({
+      answer_id: answerId,
+    }));
     const { error } = await this.supabase.from('votes').insert(rows);
     this.throwIfError(error);
   }

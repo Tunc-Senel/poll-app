@@ -2,12 +2,7 @@
  * Sports offered in the category filter and the create form.
  * Spelling must match surveys.category in Supabase.
  */
-export const CATEGORIES = [
-  'Basketball',
-  'Football',
-  'Padel',
-  'Tennis'
-] as const;
+export const CATEGORIES = ['Basketball', 'Football', 'Padel', 'Tennis'] as const;
 
 /**
  * Time window in calendar days for the "Ending soon" section on Home.
