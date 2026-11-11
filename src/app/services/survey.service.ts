@@ -1,8 +1,15 @@
 import { Service } from '@angular/core';
-import { createClient, PostgrestError, SupabaseClient } from '@supabase/supabase-js';
+import {
+  createClient,
+  PostgrestError,
+  REALTIME_SUBSCRIBE_STATES,
+  RealtimeChannel,
+  RealtimePostgresChangesFilter,
+  SupabaseClient,
+} from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Answer, Category, Question, Survey, SurveyDetail, VoteCounts } from '../models/survey';
-import { CATEGORIES } from '../constants/survey-constants';
+import { CATEGORIES, VOTES_CHANNEL_PREFIX } from '../constants/survey-constants';
 import {
   AnswerRow,
   QuestionVotesRow,
@@ -22,6 +29,14 @@ export class SurveyService {
     environment.supabaseUrl,
     environment.supabaseKey,
   );
+
+  /**
+   * Number of vote subscriptions so far, makes every channel name unique.
+   * supabase.channel() returns an existing channel with the same name, and a channel
+   * that is still being removed cannot take new listeners. Without the counter,
+   * going back to a survey quickly would hit exactly that channel.
+   */
+  private votesChannelCount: number = 0;
 
   /**
    * Loads all surveys without questions for the home page.
@@ -83,6 +98,22 @@ export class SurveyService {
     }));
     const { error } = await this.supabase.from('votes').insert(rows);
     this.throwIfError(error);
+  }
+
+  /**
+   * Subscribes to new rows in votes for the given answers.
+   * Calls onChange once the subscription is active (also after a reconnect)
+   * and after every new vote, so a vote between loading and subscribing is not missed.
+   * Returns a function that ends the subscription.
+   */
+  subscribeToVotes(answerIds: string[], surveyId: string, onChange: () => void): () => void {
+    const channel: RealtimeChannel = this.createVotesChannel(answerIds, surveyId, onChange);
+    channel.subscribe((status: REALTIME_SUBSCRIBE_STATES): void => {
+      if (status === REALTIME_SUBSCRIBE_STATES.SUBSCRIBED) {
+        onChange();
+      }
+    });
+    return (): void => this.removeChannel(channel);
   }
 
   /**
@@ -182,6 +213,42 @@ export class SurveyService {
       }
     }
     return voteCounts;
+  }
+
+  /**
+   * Creates a channel with a unique name that listens to new rows in votes
+   * for the given answers. The channel is not subscribed yet.
+   */
+  private createVotesChannel(
+    answerIds: string[],
+    surveyId: string,
+    onChange: () => void,
+  ): RealtimeChannel {
+    this.votesChannelCount++;
+    return this.supabase
+      .channel(`${VOTES_CHANNEL_PREFIX}${surveyId}:${this.votesChannelCount}`)
+      .on('postgres_changes', this.toVotesFilter(answerIds), (): void => onChange());
+  }
+
+  /**
+   * Realtime filter for new rows in votes whose answer_id is one of the given ids.
+   * Supabase allows at most 100 values in such an in filter.
+   */
+  private toVotesFilter(answerIds: string[]): RealtimePostgresChangesFilter<'INSERT'> {
+    return {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'votes',
+      filter: `answer_id=in.(${answerIds.join(',')})`,
+    };
+  }
+
+  /**
+   * Ends a subscription and frees its channel.
+   * Nobody waits for the result, the page has already moved on.
+   */
+  private removeChannel(channel: RealtimeChannel): void {
+    void this.supabase.removeChannel(channel);
   }
 
   /**

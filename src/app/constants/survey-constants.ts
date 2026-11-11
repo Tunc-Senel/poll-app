@@ -43,3 +43,9 @@ export const DATE_FORMAT: string = 'dd.MM.yyyy';
  * Factor that turns a share between 0 and 1 into percent.
  */
 export const PERCENT_SCALE: number = 100;
+
+/**
+ * Start of every realtime channel name for votes.
+ * survey-service appends the survey id and a counter.
+ */
+export const VOTES_CHANNEL_PREFIX: string = 'votes:';
