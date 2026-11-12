@@ -1,1 +1,20 @@
-<p>create-survey works!</p>
+<dialog
+  #dialog
+  class="create-survey"
+  aria-labelledby="create-survey-title"
+  (close)="onDialogClosed()"
+>
+  <img class="create-survey__logo" src="images/logo-dark.png" alt="Poll App" />
+  <section class="create-survey__card">
+    <header class="create-survey__header">
+      <div class="create-survey__heading">
+        <span class="create-survey__badge">Draft</span>
+        <h1 id="create-survey-title" class="create-survey__title">Create new survey</h1>
+      </div>
+      <button type="button" class="create-survey__close" aria-label="Cancel" (click)="close()">
+        <span class="create-survey__close-label">Cancel</span>
+        <img class="create-survey__close-icon" src="icons/close-white.png" alt="" />
+      </button>
+    </header>
+  </section>
+</dialog>
