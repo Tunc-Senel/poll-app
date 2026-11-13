@@ -4,6 +4,8 @@
     type="button"
     class="dropdown__toggle"
     [attr.aria-expanded]="isOpen()"
+    [attr.aria-invalid]="isInvalid() || null"
+    [attr.aria-describedby]="describedBy()"
     (click)="toggle()"
   >
     {{ label() }}

@@ -16,5 +16,14 @@
         <img class="create-survey__close-icon" src="icons/close-white.png" alt="" />
       </button>
     </header>
+    <form class="create-survey__form" novalidate (submit)="publish($event)">
+      <div class="create-survey__panel">
+        <app-survey-meta-form [form]="metaForm" [showAllErrors]="isPublishAttempted()" />
+      </div>
+      <button type="submit" class="button-primary create-survey__publish">
+        Publish
+        <img class="create-survey__publish-icon" src="icons/check-dark.png" alt="" />
+      </button>
+    </form>
   </section>
 </dialog>

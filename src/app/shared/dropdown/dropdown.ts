@@ -57,6 +57,16 @@ export class Dropdown {
   readonly selected: InputSignal<Category | null> = input.required<Category | null>();
 
   /**
+   * Id of an element that describes the button, e.g. an error message; null for none.
+   */
+  readonly describedBy: InputSignal<string | null> = input<string | null>(null);
+
+  /**
+   * Marks the button as invalid for screen readers, e.g. when no category is chosen.
+   */
+  readonly isInvalid: InputSignal<boolean> = input<boolean>(false);
+
+  /**
    * Sends the value of the clicked entry.
    */
   readonly optionSelected: OutputEmitterRef<Category | null> = output<Category | null>();

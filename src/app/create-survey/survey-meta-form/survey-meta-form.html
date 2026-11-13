@@ -1,1 +1,102 @@
-<p>survey-meta-form works!</p>
+@let controls = form().controls;
+<fieldset class="survey-meta-form" [formGroup]="form()">
+  <legend class="visually-hidden">Survey details</legend>
+  <p class="survey-meta-form__hint">Fields marked with * are required.</p>
+  <div class="survey-meta-form__columns">
+    <div class="survey-meta-form__column">
+      <div class="survey-meta-form__field">
+        <label class="survey-meta-form__label" for="survey-title">
+          Survey name <span class="survey-meta-form__required" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="survey-title"
+          class="survey-meta-form__input"
+          type="text"
+          formControlName="title"
+          required
+          autofocus
+          [attr.aria-invalid]="showsError(controls.title)"
+          [attr.aria-describedby]="showsError(controls.title) ? 'survey-title-error' : null"
+        />
+        <button
+          type="button"
+          class="survey-meta-form__clear"
+          aria-label="Clear survey name"
+          (click)="clear(controls.title)"
+        >
+          <img class="survey-meta-form__clear-icon" src="icons/delete-white.png" alt="" />
+        </button>
+        @if (showsError(controls.title)) {
+          <span id="survey-title-error" class="survey-meta-form__error">
+            Please enter a survey name.
+          </span>
+        }
+      </div>
+      <div class="survey-meta-form__row">
+        <div class="survey-meta-form__field survey-meta-form__field--date">
+          <label class="survey-meta-form__label" for="survey-end-date">
+            Set end date <span class="survey-meta-form__optional">(optional)</span>
+          </label>
+          <input
+            id="survey-end-date"
+            class="survey-meta-form__input"
+            type="date"
+            formControlName="endDate"
+            [min]="minDate"
+            [attr.aria-invalid]="showsError(controls.endDate)"
+            [attr.aria-describedby]="showsError(controls.endDate) ? 'survey-end-date-error' : null"
+          />
+          <button
+            type="button"
+            class="survey-meta-form__clear"
+            aria-label="Clear end date"
+            (click)="clear(controls.endDate)"
+          >
+            <img class="survey-meta-form__clear-icon" src="icons/delete-white.png" alt="" />
+          </button>
+          @if (showsError(controls.endDate)) {
+            <span id="survey-end-date-error" class="survey-meta-form__error">
+              The end date cannot be in the past.
+            </span>
+          }
+        </div>
+        <div class="survey-meta-form__category">
+          <app-dropdown
+            label="Choose category *"
+            [options]="categoryOptions"
+            [selected]="controls.category.value"
+            [isInvalid]="showsError(controls.category)"
+            [describedBy]="showsError(controls.category) ? 'survey-category-error' : null"
+            (optionSelected)="selectCategory($event)"
+            (closed)="markCategoryTouched()"
+          />
+          @if (showsError(controls.category)) {
+            <span id="survey-category-error" class="survey-meta-form__error">
+              Please choose a category.
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="survey-meta-form__column">
+      <div class="survey-meta-form__field">
+        <label class="survey-meta-form__label" for="survey-description">
+          Describing text <span class="survey-meta-form__optional">(optional)</span>
+        </label>
+        <textarea
+          id="survey-description"
+          class="survey-meta-form__input survey-meta-form__input--textarea"
+          formControlName="description"
+        ></textarea>
+        <button
+          type="button"
+          class="survey-meta-form__clear"
+          aria-label="Clear describing text"
+          (click)="clear(controls.description)"
+        >
+          <img class="survey-meta-form__clear-icon" src="icons/delete-white.png" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+</fieldset>

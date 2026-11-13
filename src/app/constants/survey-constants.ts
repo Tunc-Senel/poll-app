@@ -49,3 +49,9 @@ export const PERCENT_SCALE: number = 100;
  * survey-service appends the survey id and a counter.
  */
 export const VOTES_CHANNEL_PREFIX: string = 'votes:';
+
+/**
+ * Matches any text with at least one visible character,
+ * so a survey name made of spaces only does not count as filled in.
+ */
+export const NOT_BLANK_PATTERN: RegExp = /\S/;
