@@ -3,7 +3,8 @@
 /**
  * Resets the browser defaults of the dialog (border, padding, background).
  * On desktop the dialog is only the frame around the card; the card carries the colors.
- * overscroll-behavior keeps the page behind from scrolling along.
+ * overscroll-behavior stops scroll chaining when the dialog itself scrolls,
+ * the page behind is locked by body:has(dialog[open]) in _utilities.scss.
  */
 .create-survey {
   width: calc(100% - 2 * var(--space-page));

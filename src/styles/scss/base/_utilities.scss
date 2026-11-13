@@ -10,6 +10,13 @@ body {
   margin: 0;
 }
 
+/**
+ * Locks the page behind an open modal dialog, also when the dialog itself does not scroll.
+ */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
 h1,
 h2,
 h3,
