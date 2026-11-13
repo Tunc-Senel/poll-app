@@ -1,0 +1,197 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+/**
+ * Removes the default frame and padding of the fieldset.
+ * min-width: 0 lets it shrink, a fieldset is min-content wide by default.
+ */
+.survey-meta-form {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.survey-meta-form__hint {
+  margin-block-end: 1.5rem;
+  font-size: var(--font-size-s);
+}
+
+/**
+ * Desktop: two columns side by side. Tablet and mobile: one below the other.
+ */
+.survey-meta-form__columns {
+  display: flex;
+  gap: 4.5rem;
+
+  @include bp.respond('tablet') {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.survey-meta-form__column {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/**
+ * End date and category side by side; flex-wrap moves the category below the date
+ * as soon as both do not fit, at any width, so no extra breakpoint is needed.
+ * On mobile the category comes first like in create-survey-mobile.png.
+ * column-reverse changes only the visual order, the tab order stays date first.
+ */
+.survey-meta-form__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.75rem 1.5rem;
+
+  @include bp.respond('tablet') {
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+}
+
+/**
+ * Label, field, delete icon and error in one wrapping row.
+ * Desktop: label on top, delete icon right of the field.
+ * Mobile: delete icon right of the label, field below at full width (order).
+ * align-content keeps the lines together when the column is taller than the field.
+ */
+.survey-meta-form__field {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem 0.75rem;
+  min-width: 0;
+}
+
+/**
+ * Starts at 13rem and grows up to the width from Figma, so the category
+ * only wraps when even the smaller date field leaves no room.
+ */
+.survey-meta-form__field--date {
+  flex: 1 1 13rem;
+  max-width: 15.75rem;
+
+  @include bp.respond('tablet') {
+    flex-basis: auto;
+    max-width: none;
+  }
+}
+
+.survey-meta-form__label {
+  flex-basis: 100%;
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+
+  @include bp.respond('tablet') {
+    flex: 1 1 0;
+    order: 1;
+  }
+}
+
+.survey-meta-form__optional {
+  font-weight: var(--font-weight-regular);
+}
+
+.survey-meta-form__required {
+  color: var(--color-accent);
+}
+
+.survey-meta-form__input {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem;
+  border: 0;
+  border-radius: 5px 20px 5px 5px;
+  background-color: var(--color-light);
+  color: var(--color-darkest);
+  font-size: var(--font-size-s);
+
+  @include bp.respond('tablet') {
+    flex-basis: 100%;
+    order: 3;
+  }
+}
+
+.survey-meta-form__input--textarea {
+  min-height: 6.75rem;
+  resize: vertical;
+}
+
+.survey-meta-form__input:focus-visible {
+  background: var(--color-accent-pale);
+  outline: 2px solid var(--color-text-on-dark);
+  outline-offset: 2px;
+}
+
+/**
+ * A ring via box-shadow, so it does not clash with the focus outline.
+ */
+.survey-meta-form__input[aria-invalid='true'] {
+  box-shadow: 0 0 0 2px var(--color-error);
+}
+
+.survey-meta-form__clear {
+  display: flex;
+  flex-shrink: 0;
+  margin-block-start: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background-color: transparent;
+
+  @include bp.respond('tablet') {
+    order: 2;
+    margin-block-start: 0;
+  }
+}
+
+.survey-meta-form__clear:focus-visible {
+  outline: 2px solid var(--color-text-on-dark);
+}
+
+.survey-meta-form__clear-icon {
+  width: 17.33px;
+  height: 19.5px;
+}
+
+.survey-meta-form__error {
+  flex-basis: 100%;
+  color: var(--color-error);
+  font-size: var(--font-size-s);
+
+  @include bp.respond('tablet') {
+    order: 4;
+  }
+}
+
+/**
+ * Keeps its width, so "Choose category" stays on one line; the date field shrinks instead.
+ * --dropdown-toggle-padding removes the inner padding of the dropdown button only here,
+ * so its text lines up with the labels; the dropdown on Home keeps its padding.
+ */
+.survey-meta-form__category {
+  --dropdown-toggle-padding: 0;
+
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (hover: hover) {
+  .survey-meta-form__clear:hover {
+    background-color: var(--color-delete-hover);
+  }
+}

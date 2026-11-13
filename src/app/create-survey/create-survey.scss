@@ -49,12 +49,12 @@
 .create-survey__card {
   padding-block: 2.5rem;
   padding-inline: 3.75rem;
-  border-radius: 0 100px 0 0;
+  border-radius: 5px 100px 5px 5px;
   background-color: var(--color-dark);
   color: var(--color-text-on-dark);
 
   @include bp.respond('tablet') {
-    padding-inline: 1.5rem;
+    padding-inline: 1rem;
     border-radius: 0 80px 0 0;
   }
 }
@@ -67,6 +67,7 @@
 
   @include bp.respond('tablet') {
     align-items: flex-start;
+    padding-inline: 0.5rem;
   }
 }
 
@@ -98,7 +99,7 @@
   border-radius: 10px;
   background-color: var(--color-button-secondary);
   color: var(--color-text-on-dark);
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-s);
   font-weight: var(--font-weight-bold);
 
   @include bp.respond('tablet') {
@@ -108,7 +109,7 @@
 }
 
 .create-survey__close:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-text-on-dark);
   outline-offset: 2px;
 }
 
@@ -119,6 +120,62 @@
 }
 
 .create-survey__close-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.create-survey__form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-block-start: 2rem;
+
+  @include bp.respond('tablet') {
+    margin-block-start: 2.5rem;
+  }
+}
+
+/**
+ * Lighter area for all fields; the question editor joins it in step 22.3.
+ */
+.create-survey__panel {
+  padding-block: 2.5rem;
+  padding-inline: 2rem;
+  border-radius: 0 80px 0 0;
+  background-color: var(--color-panel);
+
+  @include bp.respond('tablet') {
+    padding-inline: 0.625rem;
+    border-radius: 0 40px 0 0;
+  }
+}
+
+/**
+ * Desktop: right, without icon. Mobile: centered, in the stronger accent color, with a check mark.
+ */
+.create-survey__publish {
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+
+  @include bp.respond('tablet') {
+    align-self: center;
+    background-color: var(--color-accent);
+  }
+}
+
+.create-survey__publish:focus-visible {
+  outline: 2px solid var(--color-text-on-dark);
+  outline-offset: 2px;
+}
+
+.create-survey__publish-icon {
+  display: none;
   width: 16px;
   height: 16px;
+
+  @include bp.respond('tablet') {
+    display: block;
+  }
 }
