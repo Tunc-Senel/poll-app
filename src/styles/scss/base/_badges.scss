@@ -1,0 +1,24 @@
+/**
+ * Small label with a rounded top-right corner, e.g. "Published", "Ended" or "Draft".
+ * The background color always comes from a modifier.
+ */
+.badge {
+  padding-block: 0.1875rem;
+  padding-inline: 0.5rem 0.75rem;
+  border-radius: 4px 12px 0 0;
+  color: var(--color-darkest);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.badge--published {
+  background-color: var(--color-accent);
+}
+
+.badge--ended {
+  background-color: var(--color-accent-pale);
+}
+
+.badge--draft {
+  background-color: var(--color-accent-light);
+}

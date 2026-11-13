@@ -20,20 +20,6 @@
   justify-content: space-between;
 }
 
-.survey-info__badge {
-  padding-block: 0.1875rem;
-  padding-inline: 0.5rem 0.75rem;
-  border-radius: 4px 12px 0 0;
-  background-color: var(--color-accent);
-  color: var(--color-darkest);
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-semi-bold);
-}
-
-.survey-info__badge--ended {
-  background-color: var(--color-accent-pale);
-}
-
 .survey-info__close {
   display: none;
   position: relative;

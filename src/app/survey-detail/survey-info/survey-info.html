@@ -1,6 +1,6 @@
 <header class="survey-info">
   <div class="survey-info__top">
-    <span class="survey-info__badge" [class.survey-info__badge--ended]="!isActive()">
+    <span class="badge" [class.badge--published]="isActive()" [class.badge--ended]="!isActive()">
       {{ isActive() ? 'Published' : 'Ended' }}
     </span>
     <a class="survey-info__close" routerLink="/" aria-label="Back to home"></a>

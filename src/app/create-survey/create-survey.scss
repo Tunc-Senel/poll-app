@@ -78,19 +78,6 @@
   min-width: 0;
 }
 
-/**
- * Same shape as the Published badge in survey-info, but in the lighter accent color.
- */
-.create-survey__badge {
-  padding-block: 0.1875rem;
-  padding-inline: 0.5rem 0.75rem;
-  border-radius: 4px 12px 0 0;
-  background-color: var(--color-accent-light);
-  color: var(--color-darkest);
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-semi-bold);
-}
-
 .create-survey__title {
   color: var(--color-accent-strong);
   font-size: var(--font-size-title);
