@@ -28,6 +28,7 @@ export type AnswerArray = FormArray<FormControl<string>>;
  */
 export interface QuestionControls {
   text: FormControl<string>;
+  allowMultiple: FormControl<boolean>;
   answers: AnswerArray;
 }
 

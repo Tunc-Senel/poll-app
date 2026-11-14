@@ -42,6 +42,7 @@ export function createRequiredTextControl(): FormControl<string> {
 export function createQuestionGroup(): QuestionGroup {
   return new FormGroup<QuestionControls>({
     text: createRequiredTextControl(),
+    allowMultiple: new FormControl<boolean>(false, { nonNullable: true }),
     answers: createAnswerArray(),
   });
 }

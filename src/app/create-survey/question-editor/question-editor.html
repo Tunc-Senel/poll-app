@@ -30,6 +30,10 @@
     <span class="form-label" [id]="answersLabelId()">
       Answers <span class="form-required" aria-hidden="true">*</span>
     </span>
+    <label class="question-editor__multiple">
+      <input class="question-editor__checkbox" type="checkbox" formControlName="allowMultiple" />
+      Allow multiple answers.
+    </label>
   </div>
   <ul class="question-editor__answers" [attr.aria-labelledby]="answersLabelId()">
     @for (answer of controls.answers.controls; track answer; let index = $index) {
