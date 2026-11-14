@@ -33,7 +33,7 @@
 .answer-option__input:checked {
   border-color: var(--color-accent);
   background: var(--color-accent)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23221227' stroke-width='2'/%3E%3C/svg%3E")
+    url(../../../../public/icons/check-question-answer.png)
     center / 80% no-repeat;
 }
 
