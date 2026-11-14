@@ -136,18 +136,77 @@
 }
 
 /**
- * Lighter area for all fields; the question editor joins it in step 22.3.
+ * Lighter area for all fields: meta fields, questions and "Add next question".
  */
 .create-survey__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
   padding-block: 2.5rem;
   padding-inline: 2rem;
   border-radius: 0 80px 0 0;
   background-color: var(--color-panel);
 
   @include bp.respond('tablet') {
+    gap: 3rem;
     padding-inline: 0.625rem;
     border-radius: 0 40px 0 0;
   }
+}
+
+/**
+ * Two columns with the same gap as the meta fields, so both line up.
+ * Tablet and mobile: one column. --question-gap is used by gap and flex-basis.
+ */
+.create-survey__questions {
+  --question-gap: 4.5rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem var(--question-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.create-survey__question {
+  flex: 0 0 calc((100% - var(--question-gap)) / 2);
+  min-width: 0;
+
+  @include bp.respond('tablet') {
+    flex-basis: 100%;
+  }
+}
+
+/**
+ * Secondary button like Cancel. Desktop: left. Mobile: centered.
+ */
+.create-survey__add-question {
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.75rem;
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem;
+  border-radius: 10px;
+  background-color: var(--color-button-secondary);
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+
+  @include bp.respond('tablet') {
+    align-self: center;
+  }
+}
+
+.create-survey__add-question:focus-visible {
+  outline: 2px solid var(--color-text-on-dark);
+  outline-offset: 2px;
+}
+
+.create-survey__add-question-icon {
+  width: 20px;
+  height: 20px;
 }
 
 /**
