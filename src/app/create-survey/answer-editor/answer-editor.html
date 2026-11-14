@@ -1,1 +1,23 @@
-<p>answer-editor works!</p>
+<label class="form-label answer-editor__letter" [for]="fieldId()">
+  <span class="visually-hidden">Answer </span>{{ letter() }}.
+</label>
+<input
+  class="form-input answer-editor__input"
+  type="text"
+  required
+  [id]="fieldId()"
+  [formControl]="control()"
+  [attr.aria-invalid]="showsError()"
+  [attr.aria-describedby]="showsError() ? errorId() : null"
+/>
+<button
+  type="button"
+  class="form-clear answer-editor__delete"
+  [attr.aria-label]="deleteLabel()"
+  (click)="deleteClicked.emit()"
+>
+  <img class="form-clear__icon" src="icons/delete-white.png" alt="" />
+</button>
+@if (showsError()) {
+  <span class="form-error answer-editor__error" [id]="errorId()">Please enter an answer.</span>
+}

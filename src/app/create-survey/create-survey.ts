@@ -12,8 +12,14 @@ import {
 } from '@angular/core';
 
 import { SurveyMetaGroup } from '../models/survey-form-controls';
+import { QuestionArray, SurveyMetaGroup } from '../models/survey-form-controls';
 import { UiService } from '../services/ui.service';
-import { createSurveyMetaGroup } from '../utils/survey-form-factory';
+import {
+  createQuestionArray,
+  createQuestionGroup,
+  createSurveyMetaGroup,
+} from '../utils/survey-form-factory';
+import { QuestionEditor } from './question-editor/question-editor';
 import { SurveyMetaForm } from './survey-meta-form/survey-meta-form';
 
 /**
@@ -21,7 +27,7 @@ import { SurveyMetaForm } from './survey-meta-form/survey-meta-form';
  * Stays in app.html all the time; the signal in UiService decides whether it is open.
  */
 @Component({
-  imports: [SurveyMetaForm],
+  imports: [QuestionEditor, SurveyMetaForm],
   selector: 'app-create-survey',
   styleUrl: './create-survey.scss',
   templateUrl: './create-survey.html',
@@ -39,6 +45,16 @@ export class CreateSurvey {
 
   /**
    * Meta fields of the new survey. Owned here, because "Publish" and saving (22.4) live here.
+   */
+  protected readonly metaForm: WritableSignal<SurveyMetaGroup> =
+    signal<SurveyMetaGroup>(createSurveyMetaGroup());
+
+  /**
+   * Questions of the new survey, each with its answers. Starts with one question.
+   */
+  protected readonly questions: WritableSignal<QuestionArray> =
+    signal<QuestionArray>(createQuestionArray());
+
    */
   protected readonly metaForm: SurveyMetaGroup = createSurveyMetaGroup();
 
@@ -65,6 +81,20 @@ export class CreateSurvey {
   }
 
   /**
+   * Adds an empty question below the others. The template hides the button at MAX_QUESTIONS.
+   */
+  protected addQuestion(): void {
+    this.questions().push(createQuestionGroup());
+  }
+
+  /**
+   * Removes a question after a click on its delete icon. Question 1 never asks for this.
+   */
+  protected removeQuestion(index: number): void {
+    this.questions().removeAt(index);
+  }
+
+  /**
    * Submit of the form, also by Enter in a field: stops the page reload and shows all errors.
    * With errors the focus jumps to the first invalid field, so screen readers notice them.
    * Publish stays clickable on purpose. Saving the survey follows in step 22.4.
@@ -72,17 +102,17 @@ export class CreateSurvey {
   protected publish(event: Event): void {
     event.preventDefault();
     this.isPublishAttempted.set(true);
-    if (this.metaForm.invalid) {
+    if (this.metaForm().invalid || this.questions().invalid) {
       this.focusFirstInvalidField();
     }
   }
 
   /**
-   * Runs on the close event of the dialog, also after Esc, which closes it without our code.
-   * Resets the signal, otherwise "New survey" would not open the dialog again.
    */
   protected onDialogClosed(): void {
     this.uiService.closeCreate();
+  }
+
   }
 
   /**

@@ -1,1 +1,57 @@
-<p>question-editor works!</p>
+@let controls = group().controls;
+<fieldset class="question-editor" [formGroup]="group()">
+  <legend class="visually-hidden">Question {{ number() }}</legend>
+  <div class="form-field question-editor__field">
+    <label class="form-label question-editor__label" [for]="fieldId()">
+      {{ number() }}. Question <span class="form-required" aria-hidden="true">*</span>
+    </label>
+    <button
+      type="button"
+      class="form-clear"
+      [attr.aria-label]="deleteLabel()"
+      (click)="deleteQuestion()"
+    >
+      <img class="form-clear__icon" src="icons/delete-white.png" alt="" />
+    </button>
+    <input
+      class="form-input question-editor__input"
+      type="text"
+      formControlName="text"
+      required
+      [id]="fieldId()"
+      [attr.aria-invalid]="showsError(controls.text)"
+      [attr.aria-describedby]="showsError(controls.text) ? errorId() : null"
+    />
+    @if (showsError(controls.text)) {
+      <span class="form-error" [id]="errorId()">Please enter a question.</span>
+    }
+  </div>
+  <div class="question-editor__answers-head">
+    <span class="form-label" [id]="answersLabelId()">
+      Answers <span class="form-required" aria-hidden="true">*</span>
+    </span>
+  </div>
+  <ul class="question-editor__answers" [attr.aria-labelledby]="answersLabelId()">
+    @for (answer of controls.answers.controls; track answer; let index = $index) {
+      <li>
+        <app-answer-editor
+          [control]="answer"
+          [questionNumber]="number()"
+          [position]="index + 1"
+          [isRemovable]="canRemoveAnswer()"
+          [showAllErrors]="showAllErrors()"
+          (deleteClicked)="deleteAnswer(index)"
+        />
+      </li>
+    }
+  </ul>
+  <div class="question-editor__add-row">
+    @if (controls.answers.length < maxAnswers) {
+      <button type="button" class="question-editor__add" (click)="addAnswer()">
+        Add answer
+        <img class="question-editor__add-icon" src="icons/add-circle-white.png" alt="" />
+      </button>
+    }
+    <span class="question-editor__hint">You can add up to {{ maxAnswers }} answer fields.</span>
+  </div>
+</fieldset>

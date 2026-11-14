@@ -1,0 +1,52 @@
+@use '../../../styles/scss/abstract/breakpoints' as bp;
+
+/**
+ * Desktop: letter, field and delete icon in one row.
+ * Mobile: letter and delete icon in one row, field below at full width (order),
+ * like the fields in survey-meta-form. The host has the class form-field,
+ * so the error sits in the space kept free below.
+ */
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+/**
+ * Fixed width, so the fields of all answers start at the same line.
+ */
+.answer-editor__letter {
+  flex: 0 0 1.5rem;
+
+  @include bp.respond('tablet') {
+    flex: 1 1 0;
+    order: 1;
+  }
+}
+
+.answer-editor__input {
+  flex: 1 1 0;
+
+  @include bp.respond('tablet') {
+    flex-basis: 100%;
+    order: 3;
+  }
+}
+
+.answer-editor__delete {
+  @include bp.respond('tablet') {
+    order: 2;
+  }
+}
+
+/**
+ * Starts below the field, not below the letter (letter width plus gap).
+ */
+.answer-editor__error {
+  inset-inline-start: 2.25rem;
+
+  @include bp.respond('tablet') {
+    inset-inline-start: 0;
+  }
+}
