@@ -7,6 +7,7 @@ import { Category } from '../../models/survey';
 import { SurveyMetaGroup } from '../../models/survey-form-controls';
 import { Dropdown } from '../../shared/dropdown/dropdown';
 import { toDateInputValue } from '../../utils/date-input';
+import { hasVisibleError } from '../../utils/form-errors';
 
 /**
  * Meta fields of a new survey: name, category, end date and description.
@@ -46,7 +47,7 @@ export class SurveyMetaForm {
    * True when a field is invalid and either touched or after a click on "Publish".
    */
   protected showsError(control: AbstractControl): boolean {
-    return control.invalid && (control.touched || this.showAllErrors());
+    return hasVisibleError(control, this.showAllErrors());
   }
 
   /**
