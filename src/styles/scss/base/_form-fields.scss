@@ -1,0 +1,86 @@
+/**
+ * Shared look of the fields in the create survey dialog
+ * (survey-meta-form, question-editor, answer-editor).
+ * Layout (flex, order) stays in the components.
+ */
+.form-label {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+}
+
+.form-required {
+  color: var(--color-accent);
+}
+
+.form-input {
+  min-width: 0;
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem;
+  border: 0;
+  border-radius: 5px 20px 5px 5px;
+  background-color: var(--color-light);
+  color: var(--color-darkest);
+  font-size: var(--font-size-s);
+}
+
+/**
+ * The lighter background from Figma marks the focused field, so there is no visible outline.
+ * The transparent outline still shows in forced colors mode (Windows High Contrast),
+ * where the browser replaces all backgrounds.
+ */
+.form-input:focus-visible {
+  background: var(--color-accent-pale);
+  outline: 2px solid transparent;
+}
+
+/**
+ * A ring via box-shadow, so it does not clash with the focus outline.
+ */
+.form-input[aria-invalid='true'] {
+  box-shadow: 0 0 0 2px var(--color-error);
+}
+
+.form-clear {
+  display: flex;
+  flex-shrink: 0;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.form-clear:focus-visible {
+  outline: 2px solid var(--color-text-on-dark);
+}
+
+.form-clear__icon {
+  width: 17.33px;
+  height: 19.5px;
+}
+
+/**
+ * Container of a field that can show an error: the padding at the bottom keeps
+ * the space for one line of the message free at all times.
+ */
+.form-field {
+  position: relative;
+  padding-block-end: 1.5rem;
+}
+
+/**
+ * Sits absolutely in the free space of .form-field, so a message that appears
+ * or disappears never changes the height of the form and nothing moves.
+ */
+.form-error {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  color: var(--color-error);
+  font-size: var(--font-size-s);
+  line-height: 1.25;
+}
+
+@media (hover: hover) {
+  .form-clear:hover {
+    background-color: var(--color-delete-hover);
+  }
+}

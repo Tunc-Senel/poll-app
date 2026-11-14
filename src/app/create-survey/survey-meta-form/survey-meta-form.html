@@ -4,13 +4,13 @@
   <p class="survey-meta-form__hint">Fields marked with * are required.</p>
   <div class="survey-meta-form__columns">
     <div class="survey-meta-form__column">
-      <div class="survey-meta-form__field">
-        <label class="survey-meta-form__label" for="survey-title">
-          Survey name <span class="survey-meta-form__required" aria-hidden="true">*</span>
+      <div class="form-field survey-meta-form__field">
+        <label class="form-label survey-meta-form__label" for="survey-title">
+          Survey name <span class="form-required" aria-hidden="true">*</span>
         </label>
         <input
           id="survey-title"
-          class="survey-meta-form__input"
+          class="form-input survey-meta-form__input"
           type="text"
           formControlName="title"
           required
@@ -20,26 +20,24 @@
         />
         <button
           type="button"
-          class="survey-meta-form__clear"
+          class="form-clear survey-meta-form__clear"
           aria-label="Clear survey name"
           (click)="clear(controls.title)"
         >
-          <img class="survey-meta-form__clear-icon" src="icons/delete-white.png" alt="" />
+          <img class="form-clear__icon" src="icons/delete-white.png" alt="" />
         </button>
         @if (showsError(controls.title)) {
-          <span id="survey-title-error" class="survey-meta-form__error">
-            Please enter a survey name.
-          </span>
+          <span id="survey-title-error" class="form-error">Please enter a survey name.</span>
         }
       </div>
       <div class="survey-meta-form__row">
-        <div class="survey-meta-form__field survey-meta-form__field--date">
-          <label class="survey-meta-form__label" for="survey-end-date">
+        <div class="form-field survey-meta-form__field survey-meta-form__field--date">
+          <label class="form-label survey-meta-form__label" for="survey-end-date">
             Set end date <span class="survey-meta-form__optional">(optional)</span>
           </label>
           <input
             id="survey-end-date"
-            class="survey-meta-form__input"
+            class="form-input survey-meta-form__input"
             type="date"
             formControlName="endDate"
             [min]="minDate"
@@ -48,19 +46,17 @@
           />
           <button
             type="button"
-            class="survey-meta-form__clear"
+            class="form-clear survey-meta-form__clear"
             aria-label="Clear end date"
             (click)="clear(controls.endDate)"
           >
-            <img class="survey-meta-form__clear-icon" src="icons/delete-white.png" alt="" />
+            <img class="form-clear__icon" src="icons/delete-white.png" alt="" />
           </button>
           @if (showsError(controls.endDate)) {
-            <span id="survey-end-date-error" class="survey-meta-form__error">
-              The end date cannot be in the past.
-            </span>
+            <span id="survey-end-date-error" class="form-error">The date is in the past.</span>
           }
         </div>
-        <div class="survey-meta-form__category">
+        <div class="form-field survey-meta-form__category">
           <app-dropdown
             label="Choose category *"
             [options]="categoryOptions"
@@ -71,7 +67,7 @@
             (closed)="markCategoryTouched()"
           />
           @if (showsError(controls.category)) {
-            <span id="survey-category-error" class="survey-meta-form__error">
+            <span id="survey-category-error" class="form-error survey-meta-form__category-error">
               Please choose a category.
             </span>
           }
@@ -80,21 +76,21 @@
     </div>
     <div class="survey-meta-form__column">
       <div class="survey-meta-form__field">
-        <label class="survey-meta-form__label" for="survey-description">
+        <label class="form-label survey-meta-form__label" for="survey-description">
           Describing text <span class="survey-meta-form__optional">(optional)</span>
         </label>
         <textarea
           id="survey-description"
-          class="survey-meta-form__input survey-meta-form__input--textarea"
+          class="form-input survey-meta-form__input survey-meta-form__input--textarea"
           formControlName="description"
         ></textarea>
         <button
           type="button"
-          class="survey-meta-form__clear"
+          class="form-clear survey-meta-form__clear"
           aria-label="Clear describing text"
           (click)="clear(controls.description)"
         >
-          <img class="survey-meta-form__clear-icon" src="icons/delete-white.png" alt="" />
+          <img class="form-clear__icon" src="icons/delete-white.png" alt="" />
         </button>
       </div>
     </div>
