@@ -66,6 +66,12 @@ export class CreateSurvey {
   protected readonly isPublishAttempted: WritableSignal<boolean> = signal<boolean>(false);
 
   /**
+   * True when the current click started outside the dialog box, on the backdrop.
+   * Prevents closing when a text selection starts in a field and ends outside.
+   */
+  private isPointerDownOutside: boolean = false;
+
+  /**
    * Opens or closes the dialog whenever the signal in UiService changes.
    * afterRenderEffect runs after rendering, so the dialog element already exists.
    */
@@ -113,6 +119,36 @@ export class CreateSurvey {
    */
   protected onDialogClosed(): void {
     this.uiService.closeCreate();
+  /**
+   * Remembers whether a click starts on the backdrop, see onDialogClick().
+   */
+  protected onDialogPointerDown(event: PointerEvent): void {
+    this.isPointerDownOutside = this.isOutsideDialog(event);
+  }
+
+  /**
+   * Closes the dialog after a click on the backdrop, like Cancel.
+   * Only if the click started there too, so a text selection that ends outside does not close it.
+   */
+  protected onDialogClick(event: MouseEvent): void {
+    if (this.isPointerDownOutside && this.isOutsideDialog(event)) {
+      this.close();
+    }
+  }
+
+  /**
+   * True for a click on the backdrop. The browser reports it as a click on the dialog itself,
+   * so the position decides. The full-screen mobile dialog has no backdrop and never matches.
+   */
+  private isOutsideDialog(event: MouseEvent): boolean {
+    const dialog: HTMLDialogElement = this.dialog().nativeElement;
+    if (event.target !== dialog) {
+      return false;
+    }
+    const box: DOMRect = dialog.getBoundingClientRect();
+    const isBesideBox: boolean = event.clientX < box.left || event.clientX > box.right;
+    const isAboveOrBelowBox: boolean = event.clientY < box.top || event.clientY > box.bottom;
+    return isBesideBox || isAboveOrBelowBox;
   }
 
   }

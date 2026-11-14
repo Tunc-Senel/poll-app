@@ -3,6 +3,8 @@
   class="create-survey"
   aria-labelledby="create-survey-title"
   (close)="onDialogClosed()"
+  (pointerdown)="onDialogPointerDown($event)"
+  (click)="onDialogClick($event)"
 >
   <img class="create-survey__logo" src="images/logo-dark.png" alt="Poll App" />
   <section class="create-survey__card">
