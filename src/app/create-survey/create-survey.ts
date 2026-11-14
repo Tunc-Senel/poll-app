@@ -45,6 +45,7 @@ export class CreateSurvey {
 
   /**
    * Meta fields of the new survey. Owned here, because "Publish" and saving (22.4) live here.
+   * A signal, so resetForm() can put in a fresh form group and the children redraw.
    */
   protected readonly metaForm: WritableSignal<SurveyMetaGroup> =
     signal<SurveyMetaGroup>(createSurveyMetaGroup());
@@ -116,9 +117,15 @@ export class CreateSurvey {
   }
 
   /**
+   * Runs on the close event of the dialog: after Cancel, X, Esc and a click on the backdrop.
+   * Resets the signal, otherwise "New survey" would not open the dialog again,
+   * and empties the form, so the dialog always opens blank.
    */
   protected onDialogClosed(): void {
     this.uiService.closeCreate();
+    this.resetForm();
+  }
+
   /**
    * Remembers whether a click starts on the backdrop, see onDialogClick().
    */
@@ -151,6 +158,14 @@ export class CreateSurvey {
     return isBesideBox || isAboveOrBelowBox;
   }
 
+  /**
+   * Puts in a fresh, empty form. New objects instead of reset(): reset() keeps extra questions
+   * in the FormArray, and the OnPush children only redraw when their inputs get new objects.
+   */
+  private resetForm(): void {
+    this.metaForm.set(createSurveyMetaGroup());
+    this.questions.set(createQuestionArray());
+    this.isPublishAttempted.set(false);
   }
 
   /**
