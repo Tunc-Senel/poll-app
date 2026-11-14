@@ -25,6 +25,12 @@ export const MIN_ANSWERS: number = 2;
 export const MAX_ANSWERS: number = 6;
 
 /**
+ * Upper limit of questions per survey in the create form.
+ * 16 × MAX_ANSWERS = 96 answer ids stay below the limit of 100 values in the realtime filter.
+ */
+export const MAX_QUESTIONS: number = 16;
+
+/**
  * Milliseconds of one day, used to count calendar days.
  */
 export const MS_PER_DAY: number = 24 * 60 * 60 * 1000;

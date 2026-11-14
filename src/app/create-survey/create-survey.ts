@@ -11,7 +11,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 
-import { SurveyMetaGroup } from '../models/survey-form-controls';
+import { MAX_QUESTIONS } from '../constants/survey-constants';
 import { QuestionArray, SurveyMetaGroup } from '../models/survey-form-controls';
 import { UiService } from '../services/ui.service';
 import {
@@ -55,8 +55,10 @@ export class CreateSurvey {
   protected readonly questions: WritableSignal<QuestionArray> =
     signal<QuestionArray>(createQuestionArray());
 
+  /**
+   * Upper limit for the template, "Add next question" disappears at this number.
    */
-  protected readonly metaForm: SurveyMetaGroup = createSurveyMetaGroup();
+  protected readonly maxQuestions: number = MAX_QUESTIONS;
 
   /**
    * True after the first click on "Publish"; survey-meta-form then shows all errors.

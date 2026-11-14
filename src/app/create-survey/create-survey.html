@@ -31,10 +31,12 @@
             </li>
           }
         </ol>
+        @if (questions().length < maxQuestions) {
           <button type="button" class="create-survey__add-question" (click)="addQuestion()">
             Add next question
             <img class="create-survey__add-question-icon" src="icons/add-circle-white.png" alt="" />
           </button>
+        }
       </div>
       <button type="submit" class="button-primary create-survey__publish">
         Publish
