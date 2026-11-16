@@ -12,9 +12,12 @@ import {
 } from '@angular/core';
 
 import { MAX_QUESTIONS } from '../constants/survey-constants';
+import { NewSurvey } from '../models/survey';
 import { QuestionArray, SurveyMetaGroup } from '../models/survey-form-controls';
+import { SurveyService } from '../services/survey.service';
 import { UiService } from '../services/ui.service';
 import { syncDialog } from '../utils/dialog';
+import { toNewSurvey } from '../utils/new-survey';
 import {
   createQuestionArray,
   createQuestionGroup,
@@ -35,6 +38,10 @@ import { SurveyMetaForm } from './survey-meta-form/survey-meta-form';
 })
 export class CreateSurvey {
   private readonly uiService: UiService = inject(UiService);
+
+  private readonly surveyService: SurveyService = inject(SurveyService);
+
+  private readonly router: Router = inject(Router);
 
   private readonly injector: Injector = inject(Injector);
 
@@ -66,6 +73,16 @@ export class CreateSurvey {
    * True after the first click on "Publish"; survey-meta-form then shows all errors.
    */
   protected readonly isPublishAttempted: WritableSignal<boolean> = signal<boolean>(false);
+
+  /**
+   * True while the survey is being saved: "Publish" is disabled and the dialog cannot be closed.
+   */
+  protected readonly isSaving: WritableSignal<boolean> = signal<boolean>(false);
+
+  /**
+   * True after saving failed; the dialog shows a message and stays open.
+   */
+  protected readonly isSaveFailed: WritableSignal<boolean> = signal<boolean>(false);
 
   /**
    * True when the current click started outside the dialog box, on the backdrop.
@@ -107,20 +124,36 @@ export class CreateSurvey {
   /**
    * Submit of the form, also by Enter in a field: stops the page reload and shows all errors.
    * With errors the focus jumps to the first invalid field, so screen readers notice them.
-   * Publish stays clickable on purpose. Saving the survey follows in step 22.4.
+   * A valid form is saved. Enter while saving does nothing, so nothing is saved twice.
    */
   protected publish(event: Event): void {
     event.preventDefault();
+    if (this.isSaving()) {
+      return;
+    }
     this.isPublishAttempted.set(true);
-    if (this.metaForm().invalid || this.questions().invalid) {
+    const survey: NewSurvey | null = this.readValidSurvey();
+    if (survey === null) {
       this.focusFirstInvalidField();
+      return;
+    }
+    void this.saveSurvey(survey);
+  }
+
+  /**
+   * Blocks Esc while saving, otherwise the form would be reset while the requests still run.
+   * Chrome lets a second Esc in a row close the dialog anyway (see plan, known limit).
+   */
+  protected onDialogCancel(event: Event): void {
+    if (this.isSaving()) {
+      event.preventDefault();
     }
   }
 
   /**
-   * Runs on the close event of the dialog: after Cancel, X, Esc and a click on the backdrop.
-   * Resets the signal, otherwise "New survey" would not open the dialog again,
-   * and empties the form, so the dialog always opens blank.
+   * Runs on the close event of the dialog: after Cancel, X, Esc, a click on the backdrop
+   * and after publishing. Resets the signal, otherwise "New survey" would not open
+   * the dialog again, and empties the form, so the dialog always opens blank.
    */
   protected onDialogClosed(): void {
     this.uiService.closeCreate();
@@ -139,8 +172,35 @@ export class CreateSurvey {
    * Only if the click started there too, so a text selection that ends outside does not close it.
    */
   protected onDialogClick(event: MouseEvent): void {
-    if (this.isPointerDownOutside && this.isOutsideDialog(event)) {
+    if (this.isPointerDownOutside && this.isOutsideDialog(event) && !this.isSaving()) {
       this.close();
+    }
+  }
+
+  /**
+   * The form as a NewSurvey, or null while any field is invalid.
+   */
+  private readValidSurvey(): NewSurvey | null {
+    if (this.metaForm().invalid || this.questions().invalid) {
+      return null;
+    }
+    return toNewSurvey(this.metaForm(), this.questions());
+  }
+
+  /**
+   * Saves the survey. On success the dialog closes and the confirmation opens,
+   * on failure a message appears and the dialog stays open with all entries.
+   */
+  private async saveSurvey(survey: NewSurvey): Promise<void> {
+    this.isSaving.set(true);
+    this.isSaveFailed.set(false);
+    try {
+      const surveyId: string = await this.surveyService.createSurvey(survey);
+      this.uiService.closeCreate();
+    } catch {
+      this.isSaveFailed.set(true);
+    } finally {
+      this.isSaving.set(false);
     }
   }
 
@@ -167,6 +227,7 @@ export class CreateSurvey {
     this.metaForm.set(createSurveyMetaGroup());
     this.questions.set(createQuestionArray());
     this.isPublishAttempted.set(false);
+    this.isSaveFailed.set(false);
   }
 
   /**
