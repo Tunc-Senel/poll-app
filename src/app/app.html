@@ -1,3 +1,5 @@
 <router-outlet />
 
-<app-create-survey />
+@defer (on idle) {
+  <app-create-survey />
+}
