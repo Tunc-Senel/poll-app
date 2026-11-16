@@ -13,7 +13,12 @@
         <span class="badge badge--draft">Draft</span>
         <h1 id="create-survey-title" class="create-survey__title">Create new survey</h1>
       </div>
-      <button type="button" class="create-survey__close" aria-label="Cancel" (click)="close()">
+      <button
+        type="button"
+        class="button-secondary create-survey__close"
+        aria-label="Cancel"
+        (click)="close()"
+      >
         <span class="create-survey__close-label">Cancel</span>
         <img class="create-survey__close-icon" src="icons/close-white.png" alt="" />
       </button>
@@ -34,7 +39,11 @@
           }
         </ol>
         @if (questions().length < maxQuestions) {
-          <button type="button" class="create-survey__add-question" (click)="addQuestion()">
+          <button
+            type="button"
+            class="button-secondary create-survey__add-question"
+            (click)="addQuestion()"
+          >
             Add next question
             <img class="create-survey__add-question-icon" src="icons/add-circle-white.png" alt="" />
           </button>
