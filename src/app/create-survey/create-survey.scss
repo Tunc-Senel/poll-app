@@ -191,23 +191,51 @@
 }
 
 /**
+ * Error message and "Publish" in one row: message left, button right.
+ * Mobile: one below the other, both centered.
+ */
+.create-survey__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem 2rem;
+
+  @include bp.respond('tablet') {
+    flex-direction: column;
+  }
+}
+
+.create-survey__save-error {
+  flex: 1 1 15rem;
+  color: var(--color-error);
+  font-size: var(--font-size-s);
+
+  @include bp.respond('tablet') {
+    flex: none;
+    text-align: center;
+  }
+}
+
+/**
  * Desktop: right, without icon. Mobile: centered, in the stronger accent color, with a check mark.
  */
 .create-survey__publish {
   display: flex;
-  align-self: flex-end;
   align-items: center;
   gap: 0.5rem;
 
   @include bp.respond('tablet') {
-    align-self: center;
     background-color: var(--color-accent);
   }
 }
 
-.create-survey__publish:focus-visible {
-  outline: 2px solid var(--color-text-on-dark);
-  outline-offset: 2px;
+/**
+ * While saving: paler and with the progress cursor, as a hint that the click arrived.
+ */
+.create-survey__publish:disabled {
+  background-color: var(--color-accent-pale);
+  cursor: progress;
 }
 
 .create-survey__publish-icon {

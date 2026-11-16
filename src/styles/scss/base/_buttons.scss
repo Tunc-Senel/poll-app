@@ -11,6 +11,7 @@
 // === SECONDARY BUTTON ===
 /**
  * Cancel and "Add next question" in the create survey dialog (components.png).
+ * Disabled while a survey is being saved.
  */
 .button-secondary {
   display: flex;
@@ -24,4 +25,8 @@
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-bold);
 }
+
+.button-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
