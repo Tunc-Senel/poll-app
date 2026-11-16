@@ -14,6 +14,7 @@ import {
 import { MAX_QUESTIONS } from '../constants/survey-constants';
 import { QuestionArray, SurveyMetaGroup } from '../models/survey-form-controls';
 import { UiService } from '../services/ui.service';
+import { syncDialog } from '../utils/dialog';
 import {
   createQuestionArray,
   createQuestionGroup,
@@ -78,7 +79,7 @@ export class CreateSurvey {
    */
   constructor() {
     afterRenderEffect((): void => {
-      this.syncDialog(this.uiService.isCreateOpen());
+      syncDialog(this.dialog().nativeElement, this.uiService.isCreateOpen());
     });
   }
 
@@ -181,18 +182,5 @@ export class CreateSurvey {
       },
       { injector: this.injector },
     );
-  }
-
-  /**
-   * Shows the dialog as a modal or closes it, but only if its state really differs.
-   * showModal() on an open dialog would throw an error.
-   */
-  private syncDialog(isOpen: boolean): void {
-    const dialog: HTMLDialogElement = this.dialog().nativeElement;
-    if (isOpen && !dialog.open) {
-      dialog.showModal();
-    } else if (!isOpen && dialog.open) {
-      dialog.close();
-    }
   }
 }
