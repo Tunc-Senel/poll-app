@@ -48,6 +48,27 @@ export interface SurveyDetail extends Survey {
 }
 
 /**
+ * Question of a new survey before it is saved; answers are the texts in their order.
+ */
+export interface NewQuestion {
+  text: string;
+  allowMultiple: boolean;
+  answers: string[];
+}
+
+/**
+ * Survey from the create form before it is saved, still without ids.
+ * endDate is already the end of the chosen day; null means it never ends.
+ */
+export interface NewSurvey {
+  title: string;
+  description: string | null;
+  category: Category;
+  endDate: Date | null;
+  questions: NewQuestion[];
+}
+
+/**
  * Votes per answer id.
  * Kept apart from the survey so live updates only replace this object.
  */

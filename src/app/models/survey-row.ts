@@ -71,3 +71,23 @@ export interface QuestionVotesRow {
 export interface VoteInsertRow {
   answer_id: string;
 }
+
+/**
+ * New row for the surveys table. The id comes from the client, created_at from Supabase.
+ */
+export type SurveyInsertRow = Omit<SurveyRow, 'created_at'>;
+
+/**
+ * New row for the answers table; the id is set by Supabase, nothing refers to it yet.
+ */
+export type AnswerInsertRow = Omit<AnswerRow, 'id'>;
+
+/**
+ * Row type for each table that createSurvey writes to.
+ * insertRows derives its rows from the table name.
+ */
+export interface InsertRowsByTable {
+  surveys: SurveyInsertRow;
+  questions: QuestionRow;
+  answers: AnswerInsertRow;
+}

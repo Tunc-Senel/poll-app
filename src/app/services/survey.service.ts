@@ -8,13 +8,26 @@ import {
   SupabaseClient,
 } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
-import { Answer, Category, Question, Survey, SurveyDetail, VoteCounts } from '../models/survey';
+import {
+  Answer,
+  Category,
+  NewQuestion,
+  NewSurvey,
+  Question,
+  Survey,
+  SurveyDetail,
+  VoteCounts,
+} from '../models/survey';
 import { CATEGORIES, VOTES_CHANNEL_PREFIX } from '../constants/survey-constants';
 import {
+  AnswerInsertRow,
   AnswerRow,
+  InsertRowsByTable,
+  QuestionRow,
   QuestionVotesRow,
   QuestionWithAnswersRow,
   SurveyDetailRow,
+  SurveyInsertRow,
   SurveyRow,
   VoteInsertRow,
 } from '../models/survey-row';
@@ -98,6 +111,21 @@ export class SurveyService {
     }));
     const { error } = await this.supabase.from('votes').insert(rows);
     this.throwIfError(error);
+  }
+
+  /**
+   * Saves a new survey: first the survey, then all questions in one insert,
+   * then all answers in one insert. The ids of survey and questions are created here,
+   * so every answer points to its question without relying on the order Supabase returns.
+   * Returns the id of the new survey for the confirmation and the redirect.
+   */
+  async createSurvey(survey: NewSurvey): Promise<string> {
+    const surveyId: string = crypto.randomUUID();
+    const questionRows: QuestionRow[] = this.toQuestionRows(survey.questions, surveyId);
+    await this.insertRows('surveys', [this.toSurveyInsertRow(survey, surveyId)]);
+    await this.insertRows('questions', questionRows);
+    await this.insertRows('answers', this.toAnswerInsertRows(survey.questions, questionRows));
+    return surveyId;
   }
 
   /**
@@ -213,6 +241,61 @@ export class SurveyService {
       }
     }
     return voteCounts;
+  }
+
+  /**
+   * Inserts all rows into one table in a single request.
+   * The row type follows from the table name, so a wrong pair does not compile.
+   */
+  private async insertRows<Table extends keyof InsertRowsByTable>(
+    table: Table,
+    rows: InsertRowsByTable[Table][],
+  ): Promise<void> {
+    const { error } = await this.supabase.from(table).insert(rows);
+    this.throwIfError(error);
+  }
+
+  /**
+   * Converts a new survey into its row; the end date becomes an ISO string or null.
+   */
+  private toSurveyInsertRow(survey: NewSurvey, id: string): SurveyInsertRow {
+    return {
+      id,
+      title: survey.title,
+      description: survey.description,
+      category: survey.category,
+      end_date: survey.endDate?.toISOString() ?? null,
+    };
+  }
+
+  /**
+   * Converts the new questions into rows with their own ids and positions from 1.
+   */
+  private toQuestionRows(questions: NewQuestion[], surveyId: string): QuestionRow[] {
+    return questions.map((question: NewQuestion, index: number): QuestionRow => ({
+      id: crypto.randomUUID(),
+      survey_id: surveyId,
+      text: question.text,
+      allow_multiple: question.allowMultiple,
+      position: index + 1,
+    }));
+  }
+
+  /**
+   * Converts the answers of all questions into rows. questionRows has the same order
+   * as questions, so the index gives each answer the id of its question.
+   */
+  private toAnswerInsertRows(
+    questions: NewQuestion[],
+    questionRows: QuestionRow[],
+  ): AnswerInsertRow[] {
+    return questions.flatMap((question: NewQuestion, index: number): AnswerInsertRow[] =>
+      question.answers.map((text: string, answerIndex: number): AnswerInsertRow => ({
+        question_id: questionRows[index].id,
+        text,
+        position: answerIndex + 1,
+      })),
+    );
   }
 
   /**
