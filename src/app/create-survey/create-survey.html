@@ -65,3 +65,7 @@
     </form>
   </section>
 </dialog>
+<app-publish-confirmation
+  [isOpen]="publishedSurveyId() !== null"
+  (closed)="openPublishedSurvey()"
+/>

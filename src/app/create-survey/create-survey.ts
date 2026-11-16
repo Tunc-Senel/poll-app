@@ -10,6 +10,7 @@ import {
   viewChild,
   WritableSignal,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MAX_QUESTIONS } from '../constants/survey-constants';
 import { NewSurvey } from '../models/survey';
@@ -23,6 +24,7 @@ import {
   createQuestionGroup,
   createSurveyMetaGroup,
 } from '../utils/survey-form-factory';
+import { PublishConfirmation } from './publish-confirmation/publish-confirmation';
 import { QuestionEditor } from './question-editor/question-editor';
 import { SurveyMetaForm } from './survey-meta-form/survey-meta-form';
 
@@ -31,7 +33,7 @@ import { SurveyMetaForm } from './survey-meta-form/survey-meta-form';
  * Stays in app.html all the time; the signal in UiService decides whether it is open.
  */
 @Component({
-  imports: [QuestionEditor, SurveyMetaForm],
+  imports: [PublishConfirmation, QuestionEditor, SurveyMetaForm],
   selector: 'app-create-survey',
   styleUrl: './create-survey.scss',
   templateUrl: './create-survey.html',
@@ -83,6 +85,11 @@ export class CreateSurvey {
    * True after saving failed; the dialog shows a message and stays open.
    */
   protected readonly isSaveFailed: WritableSignal<boolean> = signal<boolean>(false);
+
+  /**
+   * Id of the survey that was just published. While it is set, the confirmation is open.
+   */
+  protected readonly publishedSurveyId: WritableSignal<string | null> = signal<string | null>(null);
 
   /**
    * True when the current click started outside the dialog box, on the backdrop.
@@ -178,6 +185,18 @@ export class CreateSurvey {
   }
 
   /**
+   * Runs when the confirmation closes: opens the new survey.
+   * survey-detail loads it even when another survey is already open (effect on the id).
+   */
+  protected openPublishedSurvey(): void {
+    const surveyId: string | null = this.publishedSurveyId();
+    this.publishedSurveyId.set(null);
+    if (surveyId !== null) {
+      void this.router.navigate(['/survey', surveyId]);
+    }
+  }
+
+  /**
    * The form as a NewSurvey, or null while any field is invalid.
    */
   private readValidSurvey(): NewSurvey | null {
@@ -196,6 +215,7 @@ export class CreateSurvey {
     this.isSaveFailed.set(false);
     try {
       const surveyId: string = await this.surveyService.createSurvey(survey);
+      this.publishedSurveyId.set(surveyId);
       this.uiService.closeCreate();
     } catch {
       this.isSaveFailed.set(true);
