@@ -1,0 +1,55 @@
+/**
+ * Pointer cursor for every clickable button, also those with their own look
+ * (dropdown, filter tabs, delete icons). :where() keeps the specificity at zero,
+ * so a component can still set another cursor, e.g. progress while saving.
+ */
+:where(button:not(:disabled)) {
+  cursor: pointer;
+}
+
+/**
+ * The primary button changes its color as slowly as its icon slides in.
+ */
+.button-primary {
+  transition: background-color 0.3s ease;
+}
+
+.button-secondary {
+  transition: background-color 0.2s ease;
+}
+
+/**
+ * Hover of the shared button classes. Only on devices with a mouse,
+ * so a tap on a touch screen does not leave a stuck hover state.
+ * :not(:disabled) also matches links styled as a button (a has no disabled state).
+ * Elements with their own class set their hover in the component
+ * (dropdown, filter tabs, survey card, list item, icon buttons),
+ * nothing here targets plain a or button, so those effects stay untouched.
+ */
+@media (hover: hover) {
+  .button-primary:not(:disabled):hover {
+    background-color: var(--color-accent);
+  }
+
+  .button-secondary:not(:disabled):hover {
+    background-color: var(--color-button-secondary-hover);
+  }
+
+  .button-primary--icon:not(:disabled):hover .button-primary__icon {
+    width: var(--button-icon-size);
+    margin-inline-start: 0.5rem;
+    opacity: 1;
+  }
+}
+
+/**
+ * Users who turned off animations in their system settings get the
+ * hover states at once, without sliding or fading.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .button-primary,
+  .button-secondary,
+  .button-primary__icon {
+    transition: none;
+  }
+}
