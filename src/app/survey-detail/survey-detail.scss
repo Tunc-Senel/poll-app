@@ -43,3 +43,12 @@
   flex: 1 1 auto;
   text-align: center;
 }
+
+/**
+ * Looks like the primary button, so it also gets its hover from _hover.scss.
+ */
+.survey-detail__home-link {
+  display: inline-block;
+  margin-block-start: 1.5rem;
+  text-decoration: none;
+}
