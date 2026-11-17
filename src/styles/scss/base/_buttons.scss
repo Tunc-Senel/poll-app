@@ -8,6 +8,30 @@
   font-weight: var(--font-weight-bold);
 }
 
+/**
+ * Primary button with an icon that slides in on hover: the plus at "New survey"
+ * and "Create survey", the check mark at "Publish".
+ * The icon starts without width, so the button keeps its normal size;
+ * on hover it slides in on the right and the button grows (_hover.scss).
+ * --button-icon-size is set once here; a component can override it (Publish: 16px).
+ */
+.button-primary--icon {
+  --button-icon-size: 24px;
+
+  display: inline-flex;
+  align-items: center;
+}
+
+.button-primary__icon {
+  width: 0;
+  height: var(--button-icon-size);
+  opacity: 0;
+  transition:
+    width 0.3s ease,
+    margin-inline-start 0.3s ease,
+    opacity 0.3s ease;
+}
+
 // === SECONDARY BUTTON ===
 /**
  * Cancel and "Add next question" in the create survey dialog (components.png).

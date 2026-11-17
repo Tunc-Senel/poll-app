@@ -87,7 +87,7 @@
 
 /**
  * Desktop: "Cancel" with an X. Mobile: only the X, the label is hidden
- * and aria-label keeps the accessible name. Look from .button-secondary.
+ * and aria-label keeps the accessible name. Colors and spacing come from .button-secondary.
  */
 .create-survey__close {
   flex-shrink: 0;
@@ -218,12 +218,11 @@
 }
 
 /**
- * Desktop: right, without icon. Mobile: centered, in the stronger accent color, with a check mark.
+ * Desktop: the check mark slides in on hover (_hover.scss).
+ * Mobile: centered, in the stronger accent color, check mark always visible.
  */
 .create-survey__publish {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  --button-icon-size: 16px;
 
   @include bp.respond('tablet') {
     background-color: var(--color-accent);
@@ -239,11 +238,9 @@
 }
 
 .create-survey__publish-icon {
-  display: none;
-  width: 16px;
-  height: 16px;
-
   @include bp.respond('tablet') {
-    display: block;
+    width: var(--button-icon-size);
+    margin-inline-start: 0.5rem;
+    opacity: 1;
   }
 }

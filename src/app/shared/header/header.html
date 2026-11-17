@@ -2,11 +2,16 @@
   @if (variant() === 'home') {
     <img class="logo" src="images/logo-yellow.png" alt="Poll App" />
   } @else {
-    <a routerLink="/">
+    <a class="logo-link" routerLink="/">
       <img class="logo" src="images/logo-dark.png" alt="Poll App, back to home" />
     </a>
-    <button class="button-primary create-button" type="button" (click)="openCreateSurvey()">
+    <button
+      class="button-primary button-primary--icon create-button"
+      type="button"
+      (click)="openCreateSurvey()"
+    >
       Create survey
+      <img class="button-primary__icon" src="icons/add-circle-dark.png" alt="" />
     </button>
   }
 </header>

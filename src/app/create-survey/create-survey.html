@@ -57,9 +57,17 @@
             Your survey could not be published. Please try again.
           </p>
         }
-        <button type="submit" class="button-primary create-survey__publish" [disabled]="isSaving()">
+        <button
+          type="submit"
+          class="button-primary button-primary--icon create-survey__publish"
+          [disabled]="isSaving()"
+        >
           {{ isSaving() ? 'Publishing …' : 'Publish' }}
-          <img class="create-survey__publish-icon" src="icons/check-dark.png" alt="" />
+          <img
+            class="button-primary__icon create-survey__publish-icon"
+            src="icons/check-dark.png"
+            alt=""
+          />
         </button>
       </div>
     </form>

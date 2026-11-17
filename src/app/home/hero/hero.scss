@@ -59,7 +59,7 @@
 }
 
 .hero__lead {
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
   font-size: var(--font-size-lead);
   font-weight: var(--font-weight-semi-bold);
   color: var(--color-text-on-dark);
@@ -70,23 +70,21 @@
 }
 
 .hero__button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-
   @include bp.respond('desktop') {
     order: 4;
     align-self: center;
   }
 }
 
+/**
+ * Stacked layout: the plus icon is always visible like in home-mobile.png.
+ * Desktop: it only slides in on hover (.button-primary--icon in _hover.scss).
+ */
 .hero__button-icon {
-  display: none;
-  width: 24px;
-  aspect-ratio: 1;
-
   @include bp.respond('desktop') {
-    display: block;
+    width: var(--button-icon-size);
+    margin-inline-start: 0.5rem;
+    opacity: 1;
   }
 }
 
