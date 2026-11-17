@@ -15,6 +15,7 @@
   padding: 0.75rem 1rem 0.75rem 1.25rem;
   border-radius: 4px 48px 4px 4px;
   background-color: var(--color-list-item);
+  transition: background-color 0.2s ease;
 
   @include bp.respond('tablet') {
     padding: 1.25rem 1rem 1rem 1.25rem;

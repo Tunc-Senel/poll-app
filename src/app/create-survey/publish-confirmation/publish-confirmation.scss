@@ -42,6 +42,7 @@
   padding: 0.25rem;
   border-radius: 4px;
   background-color: transparent;
+  transition: background-color 0.2s ease;
 }
 
 .publish-confirmation__close:focus-visible {
@@ -52,4 +53,10 @@
 .publish-confirmation__close-icon {
   width: 14px;
   height: 14px;
+}
+
+@media (hover: hover) {
+  .publish-confirmation__close:hover {
+    background-color: var(--color-accent-light);
+  }
 }

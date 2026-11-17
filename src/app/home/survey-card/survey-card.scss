@@ -16,6 +16,7 @@
   border-top-right-radius: 80px;
   background-color: var(--color-card);
   color: var(--color-darkest);
+  transition: background-color 0.2s ease;
 
   @include bp.respond('tablet') {
     min-height: 14.625rem;
@@ -59,4 +60,10 @@
   border-radius: 4px;
   background-color: var(--color-accent-light);
   font-size: var(--font-size-s);
+}
+
+@media (hover: hover) {
+  .survey-card:hover {
+    background-color: var(--color-card-hover);
+  }
 }

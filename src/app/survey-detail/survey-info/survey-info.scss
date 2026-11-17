@@ -29,6 +29,7 @@
   margin-inline-end: 0.5rem;
   background-color: var(--color-accent-light);
   color: var(--color-darkest);
+  transition: background-color 0.2s ease;
 
   @include bp.respond('tablet') {
     display: block;
@@ -96,5 +97,11 @@
 
   @include bp.respond('mobile') {
     padding-block-start: 0.5rem;
+  }
+}
+
+@media (hover: hover) {
+  .survey-info__close:hover {
+    background-color: var(--color-accent);
   }
 }

@@ -18,10 +18,12 @@
   gap: 0.5rem;
   margin-block-end: 1.5rem;
   padding: 0.5rem;
+  border-radius: 4px;
   background-color: transparent;
   font-family: var(--font-base);
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-bold);
+  transition: background-color 0.2s ease;
 
   @include bp.respond('desktop') {
     display: inline-flex;
@@ -97,5 +99,11 @@
 
   @include bp.respond('desktop') {
     margin-block-start: 0;
+  }
+}
+
+@media (hover: hover) {
+  .survey-results__toggle:hover {
+    background-color: var(--color-option-selected);
   }
 }

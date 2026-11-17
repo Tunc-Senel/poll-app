@@ -21,8 +21,22 @@ header {
   aspect-ratio: 118 / 50;
 }
 
+/**
+ * Only the dark logo on the detail page is a link, so only it fades on hover.
+ */
+.logo-link {
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
 .create-button {
   @include bp.respond('tablet') {
     display: none;
+  }
+}
+
+@media (hover: hover) {
+  .logo-link:hover {
+    opacity: 0.8;
   }
 }
