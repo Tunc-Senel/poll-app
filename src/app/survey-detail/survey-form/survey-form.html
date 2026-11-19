@@ -17,8 +17,18 @@
     @if (errorMessage()) {
       <p class="survey-form__message" role="alert">{{ errorMessage() }}</p>
     }
-    <button class="button-primary survey-form__submit" type="submit" [disabled]="!canSubmit()">
-      Complete survey
-    </button>
+    <div class="survey-form__actions">
+      <button
+        class="button-primary survey-form__submit"
+        type="submit"
+        [disabled]="!canSubmit()"
+        [attr.aria-describedby]="hasMissingAnswers() ? 'survey-form-hint' : null"
+      >
+        Complete survey
+      </button>
+      @if (hasMissingAnswers()) {
+        <p id="survey-form-hint" class="survey-form__hint">Please answer all questions first.</p>
+      }
+    </div>
   }
 </form>

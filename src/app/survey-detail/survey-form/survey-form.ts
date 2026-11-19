@@ -83,14 +83,20 @@ export class SurveyForm {
   );
 
   /**
+   * True as long as at least one question has no answer yet.
+   * Shows the hint at the disabled button.
+   */
+  protected readonly hasMissingAnswers: Signal<boolean> = computed((): boolean =>
+    this.survey().questions.some(
+      (question: Question): boolean => this.selectionFor(question.id).length === 0,
+    ),
+  );
+
+  /**
    * The button is only active when every question has at least one answer.
    */
   protected readonly canSubmit: Signal<boolean> = computed(
-    (): boolean =>
-      !this.isLocked() &&
-      this.survey().questions.every(
-        (question: Question): boolean => this.selectionFor(question.id).length > 0,
-      ),
+    (): boolean => !this.isLocked() && !this.hasMissingAnswers(),
   );
 
   /**

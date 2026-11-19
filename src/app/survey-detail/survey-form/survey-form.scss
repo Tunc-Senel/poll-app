@@ -52,8 +52,15 @@
   font-weight: var(--font-weight-bold);
 }
 
-.survey-form__submit {
+/**
+ * Button on the right; reference point for the hint above it.
+ */
+.survey-form__actions {
+  position: relative;
   align-self: flex-end;
+}
+
+.survey-form__submit {
   font-size: var(--font-size-s);
   padding: 0.5rem 0.75rem;
   color: var(--color-dark);
@@ -63,7 +70,48 @@
   }
 }
 
+/**
+ * No "not allowed" cursor: the hint explains why the button is disabled.
+ */
 .survey-form__submit:disabled {
   background-color: var(--color-accent-pale);
-  cursor: not-allowed;
+}
+
+/**
+ * Hint above the disabled button, only visible while the pointer is on it.
+ * Absolutely positioned, so it never moves anything. One line (nowrap): measured
+ * in Mulish it is about 266px wide and at 320px still stays inside the form card.
+ * Always in the DOM while answers are missing, so screen readers get it
+ * through aria-describedby.
+ */
+.survey-form__hint {
+  position: absolute;
+  inset-block-end: calc(100% + 0.5rem);
+  inset-inline-end: 0;
+  white-space: nowrap;
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem;
+  border-radius: 10px;
+  background-color: var(--color-dark);
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-s);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+@media (hover: hover) {
+  .survey-form__submit:disabled:hover + .survey-form__hint {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .survey-form__hint {
+    transition: none;
+  }
 }
