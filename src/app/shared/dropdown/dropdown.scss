@@ -48,8 +48,8 @@
 
 .dropdown__menu {
   position: absolute;
-  top: calc(100% + 0.25rem);
-  left: 0;
+  inset-block-start: calc(100% + 0.25rem);
+  inset-inline-start: 0;
   z-index: 10;
   min-width: 100%;
   margin: 0;
@@ -66,7 +66,7 @@
   color: var(--color-dark);
   font-family: var(--font-base);
   font-size: var(--font-size-s);
-  text-align: left;
+  text-align: start;
   white-space: nowrap;
 }
 
