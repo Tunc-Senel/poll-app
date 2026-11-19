@@ -52,11 +52,11 @@
         }
       </div>
       <div class="create-survey__actions">
-        @if (isSaveFailed()) {
-          <p class="create-survey__save-error" role="alert">
+        <p class="create-survey__save-error" role="alert">
+          @if (isSaveFailed()) {
             Your survey could not be published. Please try again.
-          </p>
-        }
+          }
+        </p>
         <button
           type="submit"
           class="button-primary button-primary--icon create-survey__publish"

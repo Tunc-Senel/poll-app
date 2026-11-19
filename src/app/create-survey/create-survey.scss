@@ -196,7 +196,6 @@
  */
 .create-survey__actions {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: 1rem 2rem;
@@ -206,13 +205,23 @@
   }
 }
 
+/**
+ * Always in the DOM, so role="alert" exists before the text arrives and screen readers
+ * announce it reliably. Its space is reserved, so the message never moves anything:
+ * desktop beside the button (two lines at most, the row is as tall as the button),
+ * mobile below the button with room for two lines (2 × 1.5 line height = 3rem).
+ */
 .create-survey__save-error {
   flex: 1 1 15rem;
+  min-width: 0;
   color: var(--color-error);
   font-size: var(--font-size-s);
+  line-height: 1.5;
 
   @include bp.respond('tablet') {
     flex: none;
+    order: 1;
+    min-height: 3rem;
     text-align: center;
   }
 }
