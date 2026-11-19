@@ -61,3 +61,9 @@ export const VOTES_CHANNEL_PREFIX: string = 'votes:';
  * so a survey name made of spaces only does not count as filled in.
  */
 export const NOT_BLANK_PATTERN: RegExp = /\S/;
+
+/**
+ * How long the confirmation "Your survey is now published!" stays open before
+ * the new survey opens. Long enough to read the text and for a screen reader to announce it.
+ */
+export const PUBLISH_CONFIRMATION_MS: number = 2500;

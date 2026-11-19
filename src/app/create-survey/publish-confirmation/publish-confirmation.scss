@@ -1,9 +1,11 @@
 @use '../../../styles/scss/abstract/breakpoints' as bp;
 
 /**
- * Small modal box as in publish-overlay.png: text left, X top right,
- * large rounding top right like the create survey card.
+ * Small modal box as in publish-overlay.png, large rounding top right
+ * like the create survey card. The wider padding on the right keeps the text
+ * away from the rounding, so it breaks like in the design.
  * Mobile: taller box as in publish-overlay-mobile.png.
+ * Without the X from the design: the box closes by itself.
  */
 .publish-confirmation {
   width: calc(100% - 2 * var(--space-page));
@@ -24,39 +26,16 @@
   background-color: var(--color-backdrop);
 }
 
+/**
+ * The dialog itself gets the focus, because it contains no button anymore.
+ * No focus ring: the box is not interactive and disappears by itself.
+ */
+.publish-confirmation:focus-visible {
+  outline: none;
+}
+
 .publish-confirmation__text {
   font-family: var(--font-display);
   font-size: var(--font-size-l);
   line-height: 1.25;
-}
-
-/**
- * Absolute in the top right corner, so the text can use the full height.
- * position: fixed would follow the viewport, absolute follows the dialog box.
- */
-.publish-confirmation__close {
-  position: absolute;
-  inset-block-start: 1.25rem;
-  inset-inline-end: 1.5rem;
-  display: flex;
-  padding: 0.25rem;
-  border-radius: 4px;
-  background-color: transparent;
-  transition: background-color 0.2s ease;
-}
-
-.publish-confirmation__close:focus-visible {
-  outline: 2px solid var(--color-darkest);
-  outline-offset: 2px;
-}
-
-.publish-confirmation__close-icon {
-  width: 14px;
-  height: 14px;
-}
-
-@media (hover: hover) {
-  .publish-confirmation__close:hover {
-    background-color: var(--color-accent-light);
-  }
 }
