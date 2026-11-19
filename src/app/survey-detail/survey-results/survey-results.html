@@ -12,6 +12,7 @@
   id="survey-results-content"
   class="survey-results__content"
   [class.survey-results__content--collapsed]="!isExpanded()"
+  [class.survey-results__content--empty]="!hasVotes()"
 >
   <h2 class="survey-results__title">
     Survey results

@@ -1,8 +1,8 @@
 @use '../../../styles/scss/abstract/breakpoints' as bp;
 
 /**
- * Fills the height of its section, so the second empty-state line
- * can sit at the bottom next to the form card on desktop.
+ * Fills the height of its section, which is as tall as the form card on desktop.
+ * The content can then sit at the bottom (with votes) or in the middle (without votes).
  */
 :host {
   display: flex;
@@ -49,7 +49,7 @@
 
 /**
  * Pushes the results to the bottom, so the last bar ends level with the form card
- * like in survey-detail.png. In the empty state the auto margin of the last line wins.
+ * like in survey-detail.png.
  */
 .survey-results__content {
   display: flex;
@@ -57,6 +57,20 @@
   flex-direction: column;
   justify-content: flex-end;
   gap: 1rem;
+}
+
+/**
+ * Without votes: title and both lines centered in the height of the form card,
+ * like in survey-detail-no-results.png. Only matters on desktop, where the section
+ * is stretched; stacked (≤ 1024 px) there is no extra height to center in.
+ * safe: if the form card is shorter than the content, it starts at the top
+ * instead of being pushed out above. The line before is the fallback for browsers
+ * without safe; they ignore the second line.
+ */
+.survey-results__content--empty {
+  justify-content: center;
+  justify-content: safe center;
+  gap: 1.5rem;
 }
 
 .survey-results__content--collapsed {
@@ -93,8 +107,11 @@
   line-height: 1.4;
 }
 
+/**
+ * Desktop: large gap before the last line like in the design.
+ */
 .survey-results__empty--last {
-  margin-block-start: auto;
+  margin-block-start: 8rem;
   text-align: center;
 
   @include bp.respond('desktop') {
