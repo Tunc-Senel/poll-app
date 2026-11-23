@@ -3,3 +3,12 @@
   min-height: 100dvh;
   background-color: var(--color-dark);
 }
+
+/**
+ * Space between the last survey row and the end of the page:
+ * about 156px in home.png and 32px in home-mobile.png,
+ * fluid between 320 and 1440px like --space-page.
+ */
+.home__main {
+  padding-block-end: clamp(2rem, -0.214rem + 11.07vw, 9.75rem);
+}
