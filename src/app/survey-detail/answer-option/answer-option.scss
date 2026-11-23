@@ -32,9 +32,8 @@
 
 .answer-option__input:checked {
   border-color: var(--color-accent);
-  background: var(--color-accent)
-    url(../../../../public/icons/check-question-answer.png)
-    center / 80% no-repeat;
+  background: var(--color-accent) url(../../../../public/icons/check-question-answer.png) center /
+    80% no-repeat;
 }
 
 .answer-option__input:focus-visible {

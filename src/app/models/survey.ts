@@ -4,7 +4,7 @@ import { CATEGORIES } from '../constants/survey-constants';
  * One of the fixed sports from CATEGORIES.
  * Prevents typos like "Footbal" at compile time.
  */
-export type Category = typeof CATEGORIES[number];
+export type Category = (typeof CATEGORIES)[number];
 
 /**
  * Survey as listed on Home, without questions.

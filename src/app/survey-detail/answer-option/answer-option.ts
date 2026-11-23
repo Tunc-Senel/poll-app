@@ -55,8 +55,8 @@ export class AnswerOption {
   /**
    * Type attribute of the input element.
    */
-  protected readonly inputType: Signal<AnswerInputType> = computed(
-    (): AnswerInputType => (this.allowMultiple() ? 'checkbox' : 'radio'),
+  protected readonly inputType: Signal<AnswerInputType> = computed((): AnswerInputType =>
+    this.allowMultiple() ? 'checkbox' : 'radio',
   );
 
   /**

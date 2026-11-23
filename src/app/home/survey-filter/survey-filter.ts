@@ -41,8 +41,9 @@ export class SurveyFilter {
    */
   protected readonly categoryOptions: DropdownOption[] = [
     { value: null, label: 'All Surveys' },
-    ...CATEGORIES.map(
-      (category: Category): DropdownOption => ({ value: category, label: category }),
-    ),
+    ...CATEGORIES.map((category: Category): DropdownOption => ({
+      value: category,
+      label: category,
+    })),
   ];
 }

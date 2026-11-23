@@ -74,9 +74,8 @@
 
 .question-editor__checkbox:checked {
   border-color: var(--color-accent);
-  background: var(--color-accent)
-    url(../../../../public/icons/check-question-answer.png)
-    center / 80% no-repeat;
+  background: var(--color-accent) url(../../../../public/icons/check-question-answer.png) center /
+    80% no-repeat;
 }
 
 .question-editor__checkbox:focus-visible {

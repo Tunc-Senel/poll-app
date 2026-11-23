@@ -47,12 +47,10 @@ export class ResultQuestion {
    * Every answer with its percent, in the order of the question.
    */
   protected readonly results: Signal<AnswerResult[]> = computed((): AnswerResult[] =>
-    this.question().answers.map(
-      (answer: Answer): AnswerResult => ({
-        answer,
-        percent: toPercent(this.votesFor(answer), this.totalVotes()),
-      }),
-    ),
+    this.question().answers.map((answer: Answer): AnswerResult => ({
+      answer,
+      percent: toPercent(this.votesFor(answer), this.totalVotes()),
+    })),
   );
 
   /**

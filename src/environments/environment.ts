@@ -6,5 +6,5 @@ import { EnvironmentConfig } from '../app/models/environment-config';
  */
 export const environment: EnvironmentConfig = {
   supabaseUrl: 'https://xmxumyhafdbizvenjgsw.supabase.co',
-  supabaseKey: 'sb_publishable_NubptiRiVEhqQppekdZlWw_uc5ilTmK'
+  supabaseKey: 'sb_publishable_NubptiRiVEhqQppekdZlWw_uc5ilTmK',
 };
